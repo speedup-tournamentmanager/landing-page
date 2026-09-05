@@ -875,8 +875,10 @@
         letter-spacing: 0.005em;
         overflow: hidden;
         max-width: 60px;
-        transition: max-width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-          box-shadow 0.2s ease, transform 0.2s ease;
+        transition:
+          max-width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
         animation: fab-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
       }
       .fab__icon {
@@ -945,33 +947,39 @@
 
       .wa-float {
         background: linear-gradient(145deg, #2bd671 0%, #1fb457 100%);
-        box-shadow: 0 10px 24px rgba(18, 140, 70, 0.36),
+        box-shadow:
+          0 10px 24px rgba(18, 140, 70, 0.36),
           0 2px 6px rgba(0, 0, 0, 0.12);
         animation-delay: 0.6s;
       }
       .wa-float:hover,
       .wa-float:focus-visible {
-        box-shadow: 0 16px 32px rgba(18, 140, 70, 0.42),
+        box-shadow:
+          0 16px 32px rgba(18, 140, 70, 0.42),
           0 3px 8px rgba(0, 0, 0, 0.16);
       }
       .wa-float:focus-visible {
-        box-shadow: 0 16px 32px rgba(18, 140, 70, 0.42),
+        box-shadow:
+          0 16px 32px rgba(18, 140, 70, 0.42),
           0 0 0 4px rgba(43, 214, 113, 0.35);
       }
 
       .tg-float {
         background: linear-gradient(145deg, #4dbdf5 0%, #1b8fd6 100%);
-        box-shadow: 0 10px 24px rgba(20, 110, 170, 0.36),
+        box-shadow:
+          0 10px 24px rgba(20, 110, 170, 0.36),
           0 2px 6px rgba(0, 0, 0, 0.12);
         animation-delay: 0.45s;
       }
       .tg-float:hover,
       .tg-float:focus-visible {
-        box-shadow: 0 16px 32px rgba(20, 110, 170, 0.42),
+        box-shadow:
+          0 16px 32px rgba(20, 110, 170, 0.42),
           0 3px 8px rgba(0, 0, 0, 0.16);
       }
       .tg-float:focus-visible {
-        box-shadow: 0 16px 32px rgba(20, 110, 170, 0.42),
+        box-shadow:
+          0 16px 32px rgba(20, 110, 170, 0.42),
           0 0 0 4px rgba(77, 189, 245, 0.35);
       }
 
@@ -1244,13 +1252,12 @@
       .modal-aside {
         position: relative;
         padding: 34px 32px;
-        background:
-          radial-gradient(
-            120% 80% at 0% 0%,
-            var(--lift-1) 0%,
-            #e4efe0 55%,
-            #dcebd6 100%
-          );
+        background: radial-gradient(
+          120% 80% at 0% 0%,
+          var(--lift-1) 0%,
+          #e4efe0 55%,
+          #dcebd6 100%
+        );
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -1576,9 +1583,9 @@
       <p class="reveal">
         <span class="brand-font hero-brand">Speedup</span
         ><span class="hero-brand-sub">Tournament Manager</span> handles doubles
-        pickleball events
-        end to end &mdash; team rosters and payments, round-robin pool play, live
-        standings, and an auto-advancing bracket. No spreadsheets, no scramble.
+        pickleball events end to end &mdash; team rosters and payments,
+        round-robin pool play, live standings, and an auto-advancing bracket. No
+        spreadsheets, no scramble.
       </p>
       <div class="cta-row reveal">
         <a class="btn btn-primary" href="#how">See how it works</a>
@@ -1591,10 +1598,7 @@
         <div class="bar">
           <i></i><i></i><i></i><span>speedup — bracket</span>
         </div>
-        <div
-          class="shot"
-          data-label="Auto-seeded single-elimination bracket"
-        >
+        <div class="shot" data-label="Auto-seeded single-elimination bracket">
           <img
             src="assets/7.png"
             alt="Speedup bracket view: Round of 16 through Final plus a Bronze match, with a live match in progress and winners advancing automatically"
@@ -1769,10 +1773,7 @@
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — public standings</span>
             </div>
-            <div
-              class="shot"
-              data-label="Public standings page for spectators"
-            >
+            <div class="shot" data-label="Public standings page for spectators">
               <img
                 src="assets/6.png"
                 alt="Speedup public standings page with a pool filter, showing wins, losses and point differential per team"
@@ -1797,15 +1798,27 @@
       </p>
       <div class="phone-tags">
         <span class="phone-tag">
-          <svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-200v120h400v-120H280Zm200 100q17 0 28.5-11.5T520-180q0-17-11.5-28.5T480-220q-17 0-28.5 11.5T440-180q0 17 11.5 28.5T480-140ZM280-320h400v-440H280v440Zm0-520h400v-40H280v40Z"/></svg>
+          <svg viewBox="0 -960 960 960" aria-hidden="true">
+            <path
+              d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-200v120h400v-120H280Zm200 100q17 0 28.5-11.5T520-180q0-17-11.5-28.5T480-220q-17 0-28.5 11.5T440-180q0 17 11.5 28.5T480-140ZM280-320h400v-440H280v440Zm0-520h400v-40H280v40Z"
+            />
+          </svg>
           Any phone browser
         </span>
         <span class="phone-tag">
-          <svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-56-216 226-226-58-58-168 168-84-84-58 58 142 142Z"/></svg>
+          <svg viewBox="0 -960 960 960" aria-hidden="true">
+            <path
+              d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-56-216 226-226-58-58-168 168-84-84-58 58 142 142Z"
+            />
+          </svg>
           No install, no login
         </span>
         <span class="phone-tag">
-          <svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120ZM254-346l-84-86q59-59 138.5-93.5T480-560q92 0 171.5 35T790-431l-84 85q-44-44-102-69t-124-25q-66 0-124 25t-102 69ZM84-516 0-602q92-94 215-146t265-52q142 0 265 52t215 146l-84 86q-77-77-178.5-120.5T480-680q-112 0-213.5 43.5T84-516Z"/></svg>
+          <svg viewBox="0 -960 960 960" aria-hidden="true">
+            <path
+              d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120ZM254-346l-84-86q59-59 138.5-93.5T480-560q92 0 171.5 35T790-431l-84 85q-44-44-102-69t-124-25q-66 0-124 25t-102 69ZM84-516 0-602q92-94 215-146t265-52q142 0 265 52t215 146l-84 86q-77-77-178.5-120.5T480-680q-112 0-213.5 43.5T84-516Z"
+            />
+          </svg>
           Runs on venue Wi-Fi
         </span>
       </div>
@@ -2018,12 +2031,20 @@
         </p>
         <div class="footer-contact">
           <a href="https://wa.me/639061223189">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35zM12 21.5a9.5 9.5 0 0 1-4.84-1.32l-.35-.2-3.6.94.96-3.5-.23-.36A9.5 9.5 0 1 1 12 21.5zM12 2a11.5 11.5 0 0 0-9.9 17.32L.5 24l4.8-1.26A11.5 11.5 0 1 0 12 2z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35zM12 21.5a9.5 9.5 0 0 1-4.84-1.32l-.35-.2-3.6.94.96-3.5-.23-.36A9.5 9.5 0 1 1 12 21.5zM12 2a11.5 11.5 0 0 0-9.9 17.32L.5 24l4.8-1.26A11.5 11.5 0 1 0 12 2z"
+              />
+            </svg>
             +63 906 122 3189
           </a>
           <span class="divider"></span>
           <a href="mailto:babsremoreras@gmail.com">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13zm2.2-.3 7.8 5.9 7.8-5.9a.5.5 0 0 0-.3-.2h-15a.5.5 0 0 0-.3.2zM20 7.3l-7.4 5.6a1 1 0 0 1-1.2 0L4 7.3v11.2c0 .28.22.5.5.5h15a.5.5 0 0 0 .5-.5V7.3z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13zm2.2-.3 7.8 5.9 7.8-5.9a.5.5 0 0 0-.3-.2h-15a.5.5 0 0 0-.3.2zM20 7.3l-7.4 5.6a1 1 0 0 1-1.2 0L4 7.3v11.2c0 .28.22.5.5.5h15a.5.5 0 0 0 .5-.5V7.3z"
+              />
+            </svg>
             babsremoreras@gmail.com
           </a>
         </div>
@@ -2041,7 +2062,9 @@
       >
         <span class="fab__icon">
           <svg viewBox="0 0 448 512" aria-hidden="true">
-            <path d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9L366.6 133.2c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 15.7 251.8c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/>
+            <path
+              d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9L366.6 133.2c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 15.7 251.8c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"
+            />
           </svg>
         </span>
         <span class="fab__label">Message us</span>
@@ -2055,8 +2078,12 @@
       >
         <span class="fab__icon">
           <svg viewBox="0 0 32 30" aria-hidden="true">
-            <path d="M16.0273 0C7.74266 0 1.02734 6.71532 1.02734 15C1.02734 17.7251 1.75393 20.2812 3.02503 22.4835L1.02734 30L8.81954 28.1575C10.9586 29.3315 13.4149 30 16.0273 30C24.312 30 31.0273 23.2847 31.0273 15C31.0273 6.71532 24.312 0 16.0273 0ZM16.0273 27.313C13.5207 27.313 11.1883 26.5639 9.24353 25.2772L4.63948 26.4494L5.93052 22.0491C4.5337 20.0523 3.71434 17.622 3.71434 15C3.71434 8.19971 9.22705 2.68699 16.0273 2.68699C22.8276 2.68699 28.3403 8.19971 28.3403 15C28.3403 21.8003 22.8276 27.313 16.0273 27.313Z"/>
-            <path d="M19.5432 16.9803L23.1727 18.691C23.3392 18.7699 23.4458 18.9381 23.4311 19.1219C23.3921 19.5997 23.2004 20.5569 22.3421 21.4144C19.9204 23.8361 15.5713 21.0962 15.3944 20.9904C14.3244 20.4156 13.3083 19.6473 12.345 18.6832C11.3817 17.7199 10.6126 16.7028 10.0377 15.6338C9.93195 15.4569 7.19207 11.1086 9.61374 8.68608C10.4721 7.8277 11.4285 7.63694 11.9062 7.59706C12.09 7.58232 12.2591 7.68897 12.3372 7.85544L14.0478 11.4849C14.1285 11.6566 14.0929 11.8604 13.9594 11.9947L12.684 13.2702C12.4083 13.5459 12.3267 13.9751 12.5175 14.3158C12.9831 15.1508 13.6091 15.9546 14.334 16.6942C15.0736 17.419 15.8773 18.045 16.7123 18.5106C17.053 18.7005 17.4822 18.6199 17.758 18.3442L19.0334 17.0687C19.1678 16.9343 19.3715 16.8988 19.5432 16.9803Z"/>
+            <path
+              d="M16.0273 0C7.74266 0 1.02734 6.71532 1.02734 15C1.02734 17.7251 1.75393 20.2812 3.02503 22.4835L1.02734 30L8.81954 28.1575C10.9586 29.3315 13.4149 30 16.0273 30C24.312 30 31.0273 23.2847 31.0273 15C31.0273 6.71532 24.312 0 16.0273 0ZM16.0273 27.313C13.5207 27.313 11.1883 26.5639 9.24353 25.2772L4.63948 26.4494L5.93052 22.0491C4.5337 20.0523 3.71434 17.622 3.71434 15C3.71434 8.19971 9.22705 2.68699 16.0273 2.68699C22.8276 2.68699 28.3403 8.19971 28.3403 15C28.3403 21.8003 22.8276 27.313 16.0273 27.313Z"
+            />
+            <path
+              d="M19.5432 16.9803L23.1727 18.691C23.3392 18.7699 23.4458 18.9381 23.4311 19.1219C23.3921 19.5997 23.2004 20.5569 22.3421 21.4144C19.9204 23.8361 15.5713 21.0962 15.3944 20.9904C14.3244 20.4156 13.3083 19.6473 12.345 18.6832C11.3817 17.7199 10.6126 16.7028 10.0377 15.6338C9.93195 15.4569 7.19207 11.1086 9.61374 8.68608C10.4721 7.8277 11.4285 7.63694 11.9062 7.59706C12.09 7.58232 12.2591 7.68897 12.3372 7.85544L14.0478 11.4849C14.1285 11.6566 14.0929 11.8604 13.9594 11.9947L12.684 13.2702C12.4083 13.5459 12.3267 13.9751 12.5175 14.3158C12.9831 15.1508 13.6091 15.9546 14.334 16.6942C15.0736 17.419 15.8773 18.045 16.7123 18.5106C17.053 18.7005 17.4822 18.6199 17.758 18.3442L19.0334 17.0687C19.1678 16.9343 19.3715 16.8988 19.5432 16.9803Z"
+            />
           </svg>
         </span>
         <span class="fab__label">Chat with us</span>
@@ -2074,12 +2101,24 @@
     >
       <div class="modal">
         <button type="button" class="modal-close" aria-label="Close">
-          <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-424 364-308q-11 11-28 11t-28-11q-11-11-11-28t11-28l116-116-116-115q-11-11-11-28t11-28q11-11 28-11t28 11l116 116 115-116q11-11 28-11t28 11q12 12 12 28.5T651-595L535-480l116 116q11 11 11 28t-11 28q-12 12-28.5 12T595-308L480-424Z"/></svg>
+          <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true">
+            <path
+              d="M480-424 364-308q-11 11-28 11t-28-11q-11-11-11-28t11-28l116-116-116-115q-11-11-11-28t11-28q11-11 28-11t28 11l116 116 115-116q11-11 28-11t28 11q12 12 12 28.5T651-595L535-480l116 116q11 11 11 28t-11 28q-12 12-28.5 12T595-308L480-424Z"
+            />
+          </svg>
         </button>
         <div class="modal-grid">
           <aside class="modal-aside">
             <span class="modal-aside-icon">
-              <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m438-342 139-139q12-12 29-12t29 12q12 12 12 29t-12 29L466-254q-12 12-28 12t-28-12l-85-85q-12-12-12-29t12-29q12-12 29-12t29 12l55 55ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"/></svg>
+              <svg
+                viewBox="0 -960 960 960"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="m438-342 139-139q12-12 29-12t29 12q12 12 12 29t-12 29L466-254q-12 12-28 12t-28-12l-85-85q-12-12-12-29t12-29q12-12 29-12t29 12l55 55ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"
+                />
+              </svg>
             </span>
             <h2 id="demoModalTitle">Request a demo</h2>
             <p class="modal-sub">
@@ -2088,7 +2127,15 @@
             <ul class="modal-perks">
               <li>
                 <span class="perk-ic">
-                  <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm800 112H738q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-343Z"/></svg>
+                  <svg
+                    viewBox="0 -960 960 960"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm800 112H738q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-343Z"
+                    />
+                  </svg>
                 </span>
                 <div>
                   <strong>Personalized walkthrough</strong>
@@ -2097,7 +2144,15 @@
               </li>
               <li>
                 <span class="perk-ic">
-                  <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M520-496v-144q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640v159q0 8 3 15.5t9 13.5l132 132q11 11 28 11t28-11q11-11 11-28t-11-28L520-496ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z"/></svg>
+                  <svg
+                    viewBox="0 -960 960 960"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M520-496v-144q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640v159q0 8 3 15.5t9 13.5l132 132q11 11 28 11t28-11q11-11 11-28t-11-28L520-496ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z"
+                    />
+                  </svg>
                 </span>
                 <div>
                   <strong>Get answers fast</strong>
@@ -2106,7 +2161,15 @@
               </li>
               <li>
                 <span class="perk-ic">
-                  <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m438-452-56-56q-12-12-28-12t-28 12q-12 12-12 28.5t12 28.5l84 85q12 12 28 12t28-12l170-170q12-12 12-28.5T636-593q-12-12-28.5-12T579-593L438-452Zm29 367q-6-1-12-3-135-45-215-166.5T160-516v-189q0-25 14.5-45t37.5-29l240-90q14-5 28-5t28 5l240 90q23 9 37.5 29t14.5 45v189q0 140-80 261.5T505-88q-6 2-12 3t-13 1q-7 0-13-1Zm13-79q104-33 172-132t68-220v-189l-240-90-240 90v189q0 121 68 220t172 132Zm0-316Z"/></svg>
+                  <svg
+                    viewBox="0 -960 960 960"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="m438-452-56-56q-12-12-28-12t-28 12q-12 12-12 28.5t12 28.5l84 85q12 12 28 12t28-12l170-170q12-12 12-28.5T636-593q-12-12-28.5-12T579-593L438-452Zm29 367q-6-1-12-3-135-45-215-166.5T160-516v-189q0-25 14.5-45t37.5-29l240-90q14-5 28-5t28 5l240 90q23 9 37.5 29t14.5 45v189q0 140-80 261.5T505-88q-6 2-12 3t-13 1q-7 0-13-1Zm13-79q104-33 172-132t68-220v-189l-240-90-240 90v189q0 121 68 220t172 132Zm0-316Z"
+                    />
+                  </svg>
                 </span>
                 <div>
                   <strong>No obligation</strong>
@@ -2115,30 +2178,89 @@
               </li>
             </ul>
             <div class="modal-illo" aria-hidden="true">
-              <svg viewBox="0 0 340 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 120c40-26 78-26 120 0s96 26 130 4 90-30 90-30V150H0z" fill="#cfe4c7"/>
-                <path d="M0 138c46-20 92-14 150 4s130 8 190-14V150H0z" fill="#bfdcb4"/>
+              <svg
+                viewBox="0 0 340 150"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 120c40-26 78-26 120 0s96 26 130 4 90-30 90-30V150H0z"
+                  fill="#cfe4c7"
+                />
+                <path
+                  d="M0 138c46-20 92-14 150 4s130 8 190-14V150H0z"
+                  fill="#bfdcb4"
+                />
                 <g>
-                  <rect x="34" y="46" width="120" height="82" rx="10" fill="#ffffff" stroke="#cbdcc4" stroke-width="1.5"/>
-                  <rect x="34" y="46" width="120" height="20" rx="10" fill="#eef4ec"/>
-                  <circle cx="46" cy="56" r="2.4" fill="#b9cdb1"/>
-                  <circle cx="55" cy="56" r="2.4" fill="#b9cdb1"/>
-                  <circle cx="64" cy="56" r="2.4" fill="#b9cdb1"/>
-                  <circle cx="58" cy="92" r="12" fill="#e7f1e3"/>
-                  <path d="M53 92l4 4 7-8" stroke="#2f7d3f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  <rect x="80" y="82" width="58" height="6" rx="3" fill="#e3ebe0"/>
-                  <rect x="80" y="94" width="44" height="6" rx="3" fill="#e3ebe0"/>
-                  <rect x="80" y="106" width="52" height="6" rx="3" fill="#e3ebe0"/>
+                  <rect
+                    x="34"
+                    y="46"
+                    width="120"
+                    height="82"
+                    rx="10"
+                    fill="#ffffff"
+                    stroke="#cbdcc4"
+                    stroke-width="1.5"
+                  />
+                  <rect
+                    x="34"
+                    y="46"
+                    width="120"
+                    height="20"
+                    rx="10"
+                    fill="#eef4ec"
+                  />
+                  <circle cx="46" cy="56" r="2.4" fill="#b9cdb1" />
+                  <circle cx="55" cy="56" r="2.4" fill="#b9cdb1" />
+                  <circle cx="64" cy="56" r="2.4" fill="#b9cdb1" />
+                  <circle cx="58" cy="92" r="12" fill="#e7f1e3" />
+                  <path
+                    d="M53 92l4 4 7-8"
+                    stroke="#2f7d3f"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="80"
+                    y="82"
+                    width="58"
+                    height="6"
+                    rx="3"
+                    fill="#e3ebe0"
+                  />
+                  <rect
+                    x="80"
+                    y="94"
+                    width="44"
+                    height="6"
+                    rx="3"
+                    fill="#e3ebe0"
+                  />
+                  <rect
+                    x="80"
+                    y="106"
+                    width="52"
+                    height="6"
+                    rx="3"
+                    fill="#e3ebe0"
+                  />
                 </g>
-                <path d="M160 96c26 4 40-10 44-24s16-24 34-20" stroke="#8fbf88" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 8"/>
+                <path
+                  d="M160 96c26 4 40-10 44-24s16-24 34-20"
+                  stroke="#8fbf88"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-dasharray="1 8"
+                />
                 <g transform="translate(250 40)">
-                  <circle cx="0" cy="0" r="16" fill="#f4d03f"/>
-                  <circle cx="-6" cy="-6" r="2" fill="#3a7d2f"/>
-                  <circle cx="4" cy="-8" r="2" fill="#3a7d2f"/>
-                  <circle cx="8" cy="1" r="2" fill="#3a7d2f"/>
-                  <circle cx="0" cy="4" r="2" fill="#3a7d2f"/>
-                  <circle cx="-8" cy="3" r="2" fill="#3a7d2f"/>
-                  <circle cx="2" cy="9" r="1.6" fill="#3a7d2f"/>
+                  <circle cx="0" cy="0" r="16" fill="#f4d03f" />
+                  <circle cx="-6" cy="-6" r="2" fill="#3a7d2f" />
+                  <circle cx="4" cy="-8" r="2" fill="#3a7d2f" />
+                  <circle cx="8" cy="1" r="2" fill="#3a7d2f" />
+                  <circle cx="0" cy="4" r="2" fill="#3a7d2f" />
+                  <circle cx="-8" cy="3" r="2" fill="#3a7d2f" />
+                  <circle cx="2" cy="9" r="1.6" fill="#3a7d2f" />
                 </g>
               </svg>
             </div>
@@ -2211,18 +2333,42 @@
                 "
               />
               <button type="submit" class="btn btn-primary" id="demoSubmit">
-                <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M792-443 176-183q-20 8-38-3.5T120-220v-520q0-22 18-33.5t38-3.5l616 260q25 11 25 37t-25 37ZM200-280l474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>
+                <svg
+                  viewBox="0 -960 960 960"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M792-443 176-183q-20 8-38-3.5T120-220v-520q0-22 18-33.5t38-3.5l616 260q25 11 25 37t-25 37ZM200-280l474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"
+                  />
+                </svg>
                 <span>Send request</span>
               </button>
               <p class="modal-note">
-                <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80ZM240-160v-400 400Z"/></svg>
+                <svg
+                  viewBox="0 -960 960 960"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80ZM240-160v-400 400Z"
+                  />
+                </svg>
                 <span>Sent securely &mdash; we reply by email.</span>
               </p>
               <p class="modal-note" id="demoError" hidden></p>
             </form>
             <div class="modal-success" id="demoSuccess" hidden>
               <div class="modal-success-check">
-                <svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>
+                <svg
+                  viewBox="0 -960 960 960"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"
+                  />
+                </svg>
               </div>
               <h3>Request sent</h3>
               <p>
