@@ -20,17 +20,20 @@ Google Apps Script that fetches the hosted template, fills the placeholders
   contact_method, contact, sent`. Sends every row whose `sent` is empty and
   stamps the time, so it never double-sends. Only `email` is required.
 
-- `previewCsvBatch()` / `sendCsvBatch()` — customer list in a CSV file in your
-  **private Google Drive** (see below). Preview only logs; send emails every row
-  whose `sent` is empty and writes a timestamp back into the CSV.
+- `previewCsvBatch()` / `sendCsvBatch()` — reads `email/customers.csv` from the
+  GitHub Pages site (same flow as the Tudlo script). Preview only logs; send emails
+  everyone not emailed yet and remembers them in the script's properties
+  (`sent:<email>`), so re-running never double-sends. `clearSentFlags()` forgets
+  them (testing only).
 
 ### Customer list: `customers.csv`
 
-Columns: `name, email, request_type, contact_method, contact, sent` (only `email`
-is required; leave `sent` empty). See `customers.example.csv`. Your real
-`email/customers.csv` is git-ignored — never commit or host it (it would publish
-customers' names and emails). Upload it to Google Drive, run `previewCsvBatch()`,
-then `sendCsvBatch()`.
+Columns: `name, email, request_type, contact_method, contact` (only `email` is
+required). Edit it, commit + push, wait for Pages to redeploy, then run
+`previewCsvBatch()` and `sendCsvBatch()`.
+
+> The repo and Pages site are public, so anything in `customers.csv` is readable
+> by anyone with the URL.
 
 Setup: paste `Code.gs` into script.google.com (CSV send) or a Sheet's
 Extensions -> Apps Script (batch), run once and approve the Gmail permissions.

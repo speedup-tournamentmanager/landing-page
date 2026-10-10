@@ -9,8 +9,8 @@
  * after editing it: commit + push, wait for Pages to redeploy, then send.
  *
  * ONE-TIME SETUP
- *   1. New project at script.google.com, paste this file. Upload your
- *      customers.csv to Google Drive (see "SEND FROM CSV" below).
+ *   1. New project at script.google.com, paste this file. Your customer list
+ *      is email/customers.csv on GitHub Pages (see "SEND FROM CSV" below).
  *   2. First Run -> "Authorization required" -> Review permissions -> your
  *      account -> Advanced -> Go to (project) -> Allow.
  *   3. Optional: change DEMO_LINK below to your calendar / booking link.
@@ -208,50 +208,43 @@ function sendBatch() {
 }
 
 // ---------------------------------------------------------------------------
-// 1) SEND FROM CSV — private customers.csv in your Google Drive (main way)
+// 1) SEND FROM CSV — customers.csv hosted on GitHub Pages (main way)
 //
-// 1. Upload email/customers.csv to Google Drive (anywhere; keep the file name).
-//    Columns (row 1, exactly these words, any order):
-//      name, email, request_type, contact_method, contact, sent
-//    Only "email" is required. Leave "sent" empty for new customers.
-// 2. Run previewCsvBatch() first: it only LOGS who would be emailed.
-// 3. Run sendCsvBatch(): sends to every row whose "sent" is empty and writes a
-//    timestamp back into the CSV in Drive, so re-running never double-sends.
+// 1. Put your customers in email/customers.csv, commit + push, and wait for
+//    GitHub Pages to redeploy (a minute or two). Columns (row 1, exact words,
+//    any order):  name, email, request_type, contact_method, contact
+//    Only "email" is required.
+// 2. Run previewCsvBatch(): it only LOGS who would be emailed.
+// 3. Run sendCsvBatch(): emails everyone who hasn't been emailed yet. Sent
+//    addresses are remembered in this script's properties (key "sent:<email>"),
+//    so re-running never double-sends. Add new customers to the CSV, push, run again.
 //
-// The CSV stays in your private Drive. Don't host it on GitHub Pages — that
-// would publish your customers' names and emails.
+// NOTE: the repo and Pages site are public, so anything in customers.csv can be
+// read by anyone who knows the URL.
 // ---------------------------------------------------------------------------
-const CSV_FILE_NAME = "customers.csv";
+const CSV_URL = SITE_URL + "/email/customers.csv";
 
-function csvCell_(value) {
-  const v = String(value === undefined || value === null ? "" : value);
-  return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
-}
-
-function toCsv_(rows) {
-  return rows
-    .map(function (row) {
-      return row.map(csvCell_).join(",");
-    })
-    .join("\n");
-}
-
-function findCsvFile_() {
-  const files = DriveApp.getFilesByName(CSV_FILE_NAME);
-  if (!files.hasNext()) {
+function fetchCsvRows_() {
+  const res = UrlFetchApp.fetch(CSV_URL, { muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) {
     throw new Error(
-      'No "' + CSV_FILE_NAME + '" found in your Google Drive. Upload it first.',
+      "Could not load customers.csv (" + res.getResponseCode() + "): " + CSV_URL,
     );
   }
-  const file = files.next();
-  if (files.hasNext()) {
-    throw new Error(
-      'More than one "' +
-        CSV_FILE_NAME +
-        '" in Drive - delete or rename the extras.',
-    );
+  const text = res.getContentText().replace(/^\uFEFF/, "");
+  const rows = Utilities.parseCsv(text).filter(function (r) {
+    return r.some(function (c) {
+      return String(c).trim() !== "";
+    });
+  });
+  if (rows.length < 1) throw new Error("customers.csv is empty.");
+  const header = rows.shift().map(function (h) {
+    return String(h).trim().toLowerCase();
+  });
+  if (header.indexOf("email") < 0) {
+    throw new Error("customers.csv header row must contain: email");
   }
-  return file;
+  return { header: header, rows: rows };
 }
 
 function previewCsvBatch() {
@@ -263,105 +256,104 @@ function sendCsvBatch() {
 }
 
 function runCsvBatch_(dryRun) {
-  const file = findCsvFile_();
-  const text = file
-    .getBlob()
-    .getDataAsString("UTF-8")
-    .replace(/^\uFEFF/, "");
-  const rows = Utilities.parseCsv(text).filter(function (r) {
-    return r.some(function (c) {
-      return String(c).trim() !== "";
-    });
-  });
-  if (rows.length < 2) {
-    Logger.log("CSV has no customer rows yet.");
-    return;
-  }
-
-  const header = rows[0].map(function (h) {
-    return String(h).trim().toLowerCase();
-  });
+  const csv = fetchCsvRows_();
+  const header = csv.header;
   const iMail = header.indexOf("email");
-  if (iMail < 0) throw new Error("Header row must contain: email");
-  let iSent = header.indexOf("sent");
-  if (iSent < 0) {
-    header.push("sent");
-    rows[0].push("sent");
-    iSent = header.length - 1;
-  }
   const get = function (row, key) {
     const i = header.indexOf(key);
     return i < 0 ? "" : row[i] || "";
   };
 
+  const store = PropertiesService.getScriptProperties();
   const template = dryRun ? null : fetchTemplate_();
   let sent = 0;
   let skipped = 0;
-  let changed = false;
+  let failed = 0;
 
-  try {
-    for (let r = 1; r < rows.length; r++) {
-      const row = rows[r];
-      while (row.length < header.length) row.push("");
-      const email = String(row[iMail] || "").trim();
-      if (String(row[iSent]).trim() || !email) continue; // already sent / empty
+  for (let r = 0; r < csv.rows.length; r++) {
+    const row = csv.rows[r];
+    const line = r + 2; // header is line 1
+    const email = String(row[iMail] || "").trim();
+    if (!email) continue;
 
-      if (!isEmail_(email)) {
-        Logger.log("SKIP invalid email: %s", email);
-        if (!dryRun) {
-          row[iSent] = "SKIPPED: invalid email";
-          changed = true;
-        }
-        skipped++;
-        continue;
-      }
+    if (!isEmail_(email)) {
+      Logger.log("Row %s: SKIPPED invalid email: %s", line, email);
+      skipped++;
+      continue;
+    }
+    if (store.getProperty("sent:" + email.toLowerCase())) {
+      Logger.log("Row %s: skipped (already sent) - %s", line, email);
+      skipped++;
+      continue;
+    }
 
-      if (dryRun) {
-        Logger.log(
-          "DRY RUN - would email %s <%s> | %s | %s: %s",
-          get(row, "name") || "(no name)",
-          email,
-          get(row, "request_type") || "Request a demo",
-          get(row, "contact_method") || "-",
-          get(row, "contact") || "-",
-        );
-        sent++;
-        continue;
-      }
+    const fields = {
+      name: get(row, "name"),
+      email: email,
+      request_type: get(row, "request_type"),
+      contact_method: get(row, "contact_method"),
+      contact: get(row, "contact"),
+    };
 
-      if (MailApp.getRemainingDailyQuota() < 1) {
-        Logger.log("Daily Gmail quota reached - run again tomorrow.");
-        break;
-      }
+    if (dryRun) {
+      Logger.log(
+        "Row %s: DRY RUN - would email %s <%s> | %s | %s: %s",
+        line,
+        fields.name || "(no name)",
+        email,
+        fields.request_type || "Request a demo",
+        fields.contact_method || "-",
+        fields.contact || "-",
+      );
+      sent++;
+      continue;
+    }
 
-      const msg = buildEmail_(template, {
-        name: get(row, "name"),
-        email: email,
-        request_type: get(row, "request_type"),
-        contact_method: get(row, "contact_method"),
-        contact: get(row, "contact"),
-      });
+    if (MailApp.getRemainingDailyQuota() < 1) {
+      Logger.log("Daily Gmail quota reached - run again tomorrow.");
+      break;
+    }
+
+    try {
+      const msg = buildEmail_(template, fields);
       GmailApp.sendEmail(email, msg.subject, msg.text, {
         htmlBody: msg.html,
         name: FROM_NAME,
       });
-      row[iSent] = new Date().toISOString();
-      changed = true;
+      store.setProperty("sent:" + email.toLowerCase(), new Date().toISOString());
+      Logger.log("Row %s: sent to %s <%s>", line, fields.name || "there", email);
       sent++;
-      Utilities.sleep(1200);
+    } catch (err) {
+      // one bad address must not stop the rest of the batch
+      Logger.log("Row %s: FAILED for %s - %s", line, email, err.message);
+      failed++;
     }
-  } finally {
-    // always save progress, even if something failed halfway
-    if (!dryRun && changed) file.setContent(toCsv_(rows));
+    Utilities.sleep(1200); // be gentle with Gmail's rate limits
   }
 
   Logger.log(
-    "%s done. %s: %s, skipped: %s",
+    "%s done. %s=%s skipped=%s failed=%s",
     dryRun ? "Preview" : "Batch",
-    dryRun ? "Would send" : "Sent",
+    dryRun ? "would_send" : "sent",
     sent,
     skipped,
+    failed,
   );
+}
+
+/**
+ * Forget every "already sent" flag so the next sendCsvBatch emails EVERYONE in
+ * the CSV again. Use only while testing (e.g. to re-send to your own address).
+ */
+function clearSentFlags() {
+  const store = PropertiesService.getScriptProperties();
+  const keys = Object.keys(store.getProperties()).filter(function (k) {
+    return k.indexOf("sent:") === 0;
+  });
+  keys.forEach(function (k) {
+    store.deleteProperty(k);
+  });
+  Logger.log("Cleared %s sent flag(s).", keys.length);
 }
 
 /** Adds a "Speedup" menu to the Sheet so you can run sendBatch by click. */
