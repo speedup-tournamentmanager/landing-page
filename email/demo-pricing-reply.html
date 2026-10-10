@@ -13,7 +13,6 @@
         {{REQUEST_TYPE}}    e.g. Request a demo / Request a quotation / Pricing question
         {{CONTACT_METHOD}}  Phone number / WhatsApp / Telegram
         {{CONTACT}}         what they typed in the form
-        {{DEMO_LINK}}       calendar / booking link (or a mailto: reply link)
       Layout is tables + inline styles so it renders in Gmail, Outlook and Apple Mail.
     -->
     <style>
@@ -119,7 +118,7 @@
                     </td>
                     <td valign="top" style="padding:0 0 16px; font-size:15px; line-height:23px;">
                       <strong>Personalized walkthrough.</strong><br />
-                      <span style="color:#5f6b5f;">A short live demo: teams &amp; payments, referee scoring, standings and bracket.</span>
+                      <span style="color:#5f6b5f;">A short live demo &mdash; online, or in person if you're nearby &mdash; covering teams &amp; payments, referee scoring, standings and bracket.</span>
                     </td>
                   </tr>
                   <tr>
@@ -129,6 +128,66 @@
                     <td valign="top" style="font-size:15px; line-height:23px;">
                       <strong>Your quotation.</strong><br />
                       <span style="color:#5f6b5f;">A clear price for your event &mdash; no obligation, no pressure.</span>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- DEMO: message us to set up a meeting -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#eef4ec; border-radius:16px; margin:0 0 32px;">
+                  <tr>
+                    <td style="padding:24px 22px 22px;">
+                      <div style="font-size:11px; letter-spacing:1.6px; text-transform:uppercase; font-weight:800; color:#2f7d3f; padding-bottom:8px;">
+                        Ready for a demo?
+                      </div>
+                      <h2 style="margin:0 0 10px; font-size:20px; line-height:26px; font-weight:800; letter-spacing:-0.3px; color:#171c17;">Message us to set it up</h2>
+                      <p style="margin:0 0 14px; font-size:15px; line-height:24px; color:#171c17;">
+                        Send us a message on <strong>WhatsApp</strong> or <strong>Telegram</strong> saying you'd like a demo,
+                        and we'll arrange a meeting that works for you:
+                      </p>
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 16px;">
+                        <tr>
+                          <td width="30" valign="top" style="font-size:18px; line-height:24px; padding:0 0 8px;">&#128187;</td>
+                          <td valign="top" style="font-size:15px; line-height:24px; padding:0 0 8px;"><strong>Online</strong> &mdash; a video call, from wherever you are.</td>
+                        </tr>
+                        <tr>
+                          <td width="30" valign="top" style="font-size:18px; line-height:24px;">&#128205;</td>
+                          <td valign="top" style="font-size:15px; line-height:24px;"><strong>In person</strong> &mdash; if you're near us, we can meet face to face.</td>
+                        </tr>
+                      </table>
+                      <p style="margin:0 0 6px; font-size:12px; letter-spacing:0.4px; color:#5f6b5f;">Not sure what to write? Copy this:</p>
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 18px;">
+                        <tr>
+                          <td style="background:#ffffff; border:1px dashed #b9cdb1; border-radius:10px; padding:12px 14px; font-size:14px; line-height:22px; color:#171c17; font-style:italic;">
+                            &ldquo;Hi Speedup! I'd like to set up a demo of Speedup Tournament Manager (online or in person).&rdquo;
+                          </td>
+                        </tr>
+                      </table>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;">
+                  <tr>
+                    <td class="stack stack-gap" width="50%" valign="top" style="padding-right:6px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1aa04e; border-radius:999px;">
+                        <tr>
+                          <td align="center" style="padding:0;">
+                            <a href="https://wa.me/639061223189?text=Hi%20Speedup%21%20I%27d%20like%20to%20set%20up%20a%20demo%20of%20Speedup%20Tournament%20Manager%20%28online%20or%20in%20person%29." style="display:block; padding:14px 16px; color:#ffffff; font-size:15px; line-height:20px; font-weight:800; text-decoration:none; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                              <img src="{{SITE_URL}}/assets/email-icon-whatsapp.png" width="20" height="20" alt="" style="display:inline-block; width:20px; height:20px; border:0; vertical-align:middle; margin-right:8px;" /><span style="vertical-align:middle;">WhatsApp</span>
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td class="stack" width="50%" valign="top" style="padding-left:6px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1b8fd6; border-radius:999px;">
+                        <tr>
+                          <td align="center" style="padding:0;">
+                            <a href="https://t.me/+639061223189" style="display:block; padding:14px 16px; color:#ffffff; font-size:15px; line-height:20px; font-weight:800; text-decoration:none; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+                              <img src="{{SITE_URL}}/assets/email-icon-telegram.png" width="20" height="20" alt="" style="display:inline-block; width:20px; height:20px; border:0; vertical-align:middle; margin-right:8px;" /><span style="vertical-align:middle;">Telegram</span>
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
                     </td>
                   </tr>
                 </table>
@@ -172,46 +231,6 @@
                   <tr>
                     <td colspan="2" style="padding:12px 18px; background:#fbf6dc; font-size:13px; line-height:20px; color:#6b5a10;">
                       Introductory pricing for our first events. Bigger than 400 players, or need on-site help? We'll put together a custom quotation. The exact figure for your event is always confirmed in writing first.
-                    </td>
-                  </tr>
-                </table>
-
-                <!-- CTAs -->
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 10px;">
-                  <tr>
-                    <td class="btn-full" align="center">
-                      <a href="{{DEMO_LINK}}" style="display:inline-block; background:#2f7d3f; color:#ffffff; font-size:16px; font-weight:800; text-decoration:none; padding:15px 34px; border-radius:999px; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-                        Book your demo &rarr;
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-                <p style="margin:0 0 12px; text-align:center; font-size:13px; line-height:20px; color:#5f6b5f;">
-                  or message us on the app you prefer
-                </p>
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 34px;">
-                  <tr>
-                    <td class="stack stack-gap" width="50%" valign="top" style="padding-right:6px;">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1aa04e; border-radius:999px;">
-                        <tr>
-                          <td align="center" style="padding:0;">
-                            <a href="https://wa.me/639061223189" style="display:block; padding:14px 16px; color:#ffffff; font-size:15px; line-height:20px; font-weight:800; text-decoration:none; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-                              <img src="{{SITE_URL}}/assets/email-icon-whatsapp.png" width="20" height="20" alt="" style="display:inline-block; width:20px; height:20px; border:0; vertical-align:middle; margin-right:8px;" /><span style="vertical-align:middle;">WhatsApp</span>
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td class="stack" width="50%" valign="top" style="padding-left:6px;">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1b8fd6; border-radius:999px;">
-                        <tr>
-                          <td align="center" style="padding:0;">
-                            <a href="https://t.me/+639061223189" style="display:block; padding:14px 16px; color:#ffffff; font-size:15px; line-height:20px; font-weight:800; text-decoration:none; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-                              <img src="{{SITE_URL}}/assets/email-icon-telegram.png" width="20" height="20" alt="" style="display:inline-block; width:20px; height:20px; border:0; vertical-align:middle; margin-right:8px;" /><span style="vertical-align:middle;">Telegram</span>
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
                     </td>
                   </tr>
                 </table>
