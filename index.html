@@ -855,7 +855,7 @@
         position: fixed;
         right: 24px;
         bottom: 24px;
-        z-index: 900;
+        z-index: 50; /* below the demo modal overlay (z-index: 100) */
         display: flex;
         flex-direction: column;
         align-items: flex-end;
@@ -1409,6 +1409,30 @@
       .field textarea {
         resize: vertical;
         min-height: 96px;
+      }
+      .field-hint {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .contact-row {
+        display: grid;
+        grid-template-columns: minmax(130px, 0.7fr) 1.3fr;
+        gap: 10px;
+      }
+      @media (max-width: 480px) {
+        .contact-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .captcha-wrap {
+        display: flex;
+        justify-content: center;
+        min-height: 78px;
+      }
+      .captcha-wrap .h-captcha {
+        max-width: 100%;
+        overflow: hidden;
       }
       .field input:focus,
       .field select:focus,
@@ -2289,6 +2313,32 @@
                 />
               </div>
               <div class="field">
+                <label for="demoContactValue">How can we reach you?</label>
+                <div class="contact-row">
+                  <select
+                    id="demoContactMethod"
+                    name="contact_method"
+                    aria-label="Contact method"
+                  >
+                    <option value="Phone number" selected>Phone number</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Telegram">Telegram</option>
+                  </select>
+                  <input
+                    type="tel"
+                    id="demoContactValue"
+                    name="contact_value"
+                    placeholder="+63 900 000 0000"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    required
+                  />
+                </div>
+                <span class="field-hint" id="demoContactHint"
+                  >We'll call or text this number.</span
+                >
+              </div>
+              <div class="field">
                 <label for="demoTopic">What can we help with?</label>
                 <select id="demoTopic" name="topic" required>
                   <option value="Request a demo">Request a demo</option>
@@ -2332,6 +2382,10 @@
                   opacity: 0;
                 "
               />
+              <!-- captcha: Web3Forms' built-in hCaptcha (no site key needed) -->
+              <div class="captcha-wrap">
+                <div class="h-captcha" data-captcha="true"></div>
+              </div>
               <button type="submit" class="btn btn-primary" id="demoSubmit">
                 <svg
                   viewBox="0 -960 960 960"
@@ -2485,13 +2539,17 @@
           if (e.key === "Escape" && !overlay.hidden) close();
         });
 
-        function mailtoFallback(name, email, topic, message) {
+        function mailtoFallback(name, email, contact, topic, message) {
           var subject = "[Speedup] " + topic + " — " + name;
           var body =
             "Name: " +
             name +
             "\nEmail: " +
             email +
+            "\nContact (" +
+            contact.method +
+            "): " +
+            contact.value +
             "\nRequest: " +
             topic +
             "\n\n" +
@@ -2506,14 +2564,69 @@
             encodeURIComponent(body);
         }
 
+        // contact dropdown: adapt the input to Phone / WhatsApp / Telegram
+        var methodEl = document.getElementById("demoContactMethod");
+        var valueEl = document.getElementById("demoContactValue");
+        var hintEl = document.getElementById("demoContactHint");
+        var METHODS = {
+          "Phone number": {
+            type: "tel",
+            mode: "tel",
+            ph: "+63 900 000 0000",
+            hint: "We'll call or text this number.",
+          },
+          WhatsApp: {
+            type: "tel",
+            mode: "tel",
+            ph: "WhatsApp number, e.g. +63 900 000 0000",
+            hint: "We'll message you on WhatsApp.",
+          },
+          Telegram: {
+            type: "text",
+            mode: "text",
+            ph: "@username or +63 900 000 0000",
+            hint: "We'll message you on Telegram.",
+          },
+        };
+        function applyMethod() {
+          var m = METHODS[methodEl.value] || METHODS["Phone number"];
+          valueEl.type = m.type;
+          valueEl.setAttribute("inputmode", m.mode);
+          valueEl.autocomplete = m.type === "tel" ? "tel" : "off";
+          valueEl.placeholder = m.ph;
+          hintEl.textContent = m.hint;
+        }
+        methodEl.addEventListener("change", function () {
+          applyMethod();
+          valueEl.focus();
+        });
+        form.addEventListener("reset", function () {
+          setTimeout(applyMethod, 0);
+        });
+
         form.addEventListener("submit", function (e) {
           e.preventDefault();
           if (document.getElementById("demoBotcheck").checked) return; // bot
 
           var name = document.getElementById("demoName").value.trim();
           var email = document.getElementById("demoEmail").value.trim();
+          var contact = {
+            method: document.getElementById("demoContactMethod").value,
+            value: document.getElementById("demoContactValue").value.trim(),
+          };
           var topic = document.getElementById("demoTopic").value;
           var message = document.getElementById("demoMsg").value.trim();
+
+          // captcha must be solved before anything is sent
+          var captchaField = form.querySelector(
+            'textarea[name="h-captcha-response"]',
+          );
+          var captchaToken = captchaField ? captchaField.value : "";
+          if (!captchaToken) {
+            errorEl.textContent = "Please complete the captcha first.";
+            errorEl.hidden = false;
+            return;
+          }
 
           errorEl.hidden = true;
           submitBtn.disabled = true;
@@ -2525,8 +2638,11 @@
             from_name: "Speedup landing page",
             name: name,
             email: email,
+            contact_method: contact.method,
+            contact: contact.value,
             request_type: topic,
             message: message || "(no message)",
+            "h-captcha-response": captchaToken,
           };
 
           fetch("https://api.web3forms.com/submit", {
@@ -2556,14 +2672,19 @@
               errorEl.textContent =
                 "Couldn't send automatically — opening your email app instead…";
               errorEl.hidden = false;
-              mailtoFallback(name, email, topic, message);
+              mailtoFallback(name, email, contact, topic, message);
             })
             .finally(function () {
               submitBtn.disabled = false;
               submitBtn.textContent = "Send request";
+              // a captcha token is single-use — get a fresh challenge
+              if (window.hcaptcha && typeof window.hcaptcha.reset === "function") {
+                window.hcaptcha.reset();
+              }
             });
         });
       })();
     </script>
+    <script src="https://web3forms.com/client/script.js" async defer></script>
   </body>
 </html>
