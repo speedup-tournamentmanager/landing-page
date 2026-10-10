@@ -17,14 +17,6 @@
       Layout is tables + inline styles so it renders in Gmail, Outlook and Apple Mail.
     -->
     <style>
-      /* Speedup brand font (same file the landing page uses). Apple Mail / iOS
-         load it; Gmail and Outlook ignore web fonts and use the script fallback. */
-      @font-face {
-        font-family: "Playball";
-        font-style: normal;
-        font-weight: 400;
-        src: url("{{SITE_URL}}/fonts/playball-latin.woff2") format("woff2");
-      }
       @media only screen and (max-width: 620px) {
         .container { width: 100% !important; }
         .px { padding-left: 22px !important; padding-right: 22px !important; }
@@ -50,10 +42,8 @@
             <!-- HEADER: shield logo + Speedup wordmark -->
             <tr>
               <td align="center" style="background:#ffffff; border-radius:20px 20px 0 0; padding:26px 24px 20px; border:1px solid #e7e6df; border-bottom:0;">
-                <img src="{{SITE_URL}}/assets/speedup-shield-email.png" width="92" alt="Speedup" style="display:block; width:92px; height:auto; margin:0 auto; border:0; font-family:'Playball','Brush Script MT','Segoe Script','Lucida Handwriting',cursive; font-size:28px; color:#2f7d3f;" />
-                <div style="font-family:'Playball','Brush Script MT','Segoe Script','Lucida Handwriting',cursive; font-size:42px; line-height:48px; font-weight:400; color:#2f7d3f; padding-top:4px;">
-                  Speedup
-                </div>
+                <img src="{{SITE_URL}}/assets/speedup-shield-email.png" width="92" alt="Speedup" style="display:block; width:92px; height:auto; margin:0 auto; border:0;" />
+                <img src="{{SITE_URL}}/assets/speedup-word-green.png" width="170" alt="Speedup" style="display:block; width:170px; height:auto; margin:6px auto 4px; border:0; font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:34px; color:#2f7d3f;" />
                 <div style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11px; letter-spacing:2.4px; text-transform:uppercase; font-weight:700; color:#5f6b5f; padding-top:2px;">
                   Tournament Manager
                 </div>
@@ -74,7 +64,7 @@
                   Thanks for reaching out, {{NAME}}!
                 </h1>
                 <p style="margin:0 auto; max-width:440px; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16px; line-height:25px; color:#dcebd9;">
-                  <span style="font-family:'Playball','Brush Script MT','Segoe Script','Lucida Handwriting',cursive; font-size:24px; line-height:20px; color:#f4d03f; padding-right:3px;">Speedup</span> runs your whole pickleball tournament from one screen &mdash;
+                  <img src="{{SITE_URL}}/assets/speedup-word-yellow.png" width="76" height="26" alt="Speedup" style="display:inline-block; width:76px; height:26px; border:0; vertical-align:-6px; font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:20px; color:#f4d03f;" /> runs your whole pickleball tournament from one screen &mdash;
                   rosters, pool play, live standings and an auto-advancing bracket.
                 </p>
               </td>
@@ -234,7 +224,7 @@
               <td class="px" align="center" style="background:#ffffff; border:1px solid #e7e6df; border-top:1px solid #e7e6df; border-radius:0 0 20px 20px; padding:26px 30px 30px; font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
                 <img src="{{SITE_URL}}/assets/speedup-shield-email.png" width="64" alt="" style="display:block; width:64px; height:auto; margin:0 auto 12px; border:0;" />
                 <div style="font-size:13px; line-height:22px; color:#171c17; font-weight:700; padding-bottom:10px;">
-                  Powered by: <span style="font-family:'Playball','Brush Script MT','Segoe Script','Lucida Handwriting',cursive; font-size:22px; font-weight:400; color:#2f7d3f;">Speedup</span>
+                  Powered by: <img src="{{SITE_URL}}/assets/speedup-word-green.png" width="76" height="26" alt="Speedup" style="display:inline-block; width:76px; height:26px; border:0; vertical-align:-7px; margin-left:2px; font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:18px; color:#2f7d3f;" />
                 </div>
                 <div style="font-size:14px; line-height:22px; color:#5f6b5f;">
                   Questions? Message us on WhatsApp or Telegram using the buttons above.
