@@ -16,7 +16,6 @@ Google Apps Script that fetches the hosted template, fills the placeholders
 (`{{NAME}}`, `{{REQUEST_TYPE}}`, `{{CONTACT_METHOD}}`, `{{CONTACT}}`, `{{DEMO_LINK}}`,
 `{{SITE_URL}}`) and sends it from your Gmail.
 
-- `sendSpeedupReply()` — one person; edit the values at the top of the function.
 - `sendBatch()` — Google Sheet with headers `name, email, request_type,
   contact_method, contact, sent`. Sends every row whose `sent` is empty and
   stamps the time, so it never double-sends. Only `email` is required.
@@ -33,7 +32,7 @@ is required; leave `sent` empty). See `customers.example.csv`. Your real
 customers' names and emails). Upload it to Google Drive, run `previewCsvBatch()`,
 then `sendCsvBatch()`.
 
-Setup: paste `Code.gs` into script.google.com (single send) or a Sheet's
+Setup: paste `Code.gs` into script.google.com (CSV send) or a Sheet's
 Extensions -> Apps Script (batch), run once and approve the Gmail permissions.
 Gmail cap: ~500 recipients/day (consumer), 2,000 (Workspace).
 

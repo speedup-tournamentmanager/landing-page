@@ -9,8 +9,8 @@
  * after editing it: commit + push, wait for Pages to redeploy, then send.
  *
  * ONE-TIME SETUP
- *   1. Single send: new project at script.google.com, paste this file.
- *      Bulk send:   create a Google Sheet, Extensions -> Apps Script, paste this.
+ *   1. New project at script.google.com, paste this file. Upload your
+ *      customers.csv to Google Drive (see "SEND FROM CSV" below).
  *   2. First Run -> "Authorization required" -> Review permissions -> your
  *      account -> Advanced -> Go to (project) -> Allow.
  *   3. Optional: change DEMO_LINK below to your calendar / booking link.
@@ -129,34 +129,11 @@ function fetchTemplate_() {
 }
 
 // ---------------------------------------------------------------------------
-// 1) SINGLE SEND — edit the values, then Run this function
-// ---------------------------------------------------------------------------
-function sendSpeedupReply() {
-  const fields = {
-    name: "Maria", // person's first name
-    email: "maria@example.com", // where to send the reply
-    request_type: "Request a demo", // Request a demo / Request a quotation / Pricing question ...
-    contact_method: "WhatsApp", // Phone number / WhatsApp / Telegram
-    contact: "+63 917 000 0000", // what they typed in the form
-  };
-
-  if (!isEmail_(fields.email))
-    throw new Error("Invalid email: " + fields.email);
-
-  const msg = buildEmail_(fetchTemplate_(), fields);
-  GmailApp.sendEmail(fields.email, msg.subject, msg.text, {
-    htmlBody: msg.html,
-    name: FROM_NAME,
-  });
-  Logger.log("Sent to %s <%s>", fields.name, fields.email);
-}
-
-// ---------------------------------------------------------------------------
-// 2) BULK SEND — from a Google Sheet
+// 2) BULK SEND — from a Google Sheet (alternative to the CSV)
 //
 // Sheet layout (row 1 = headers, exactly these words, any column order):
 //   name | email | request_type | contact_method | contact | sent
-//   Maria | maria@example.com | Request a demo | WhatsApp | +63 917 000 0000 |   (blank)
+//   (one customer per row; leave "sent" blank)
 //
 // Only "email" is required; the rest fall back to defaults. Run sendBatch (or use
 // the Speedup menu): it emails every row whose "sent" cell is empty and writes a
@@ -166,6 +143,12 @@ function sendBatch() {
   const template = fetchTemplate_();
 
   const sheet = SpreadsheetApp.getActiveSheet();
+  if (!sheet) {
+    throw new Error(
+      "sendBatch only works inside a Google Sheet (Extensions -> Apps Script). " +
+        "In this standalone project use previewCsvBatch / sendCsvBatch instead.",
+    );
+  }
   const values = sheet.getDataRange().getValues();
   const header = values.shift().map(function (h) {
     return String(h).trim().toLowerCase();
@@ -225,7 +208,7 @@ function sendBatch() {
 }
 
 // ---------------------------------------------------------------------------
-// 3) BULK SEND — from a private CSV file in your Google Drive
+// 1) SEND FROM CSV — private customers.csv in your Google Drive (main way)
 //
 // 1. Upload email/customers.csv to Google Drive (anywhere; keep the file name).
 //    Columns (row 1, exactly these words, any order):
@@ -263,7 +246,9 @@ function findCsvFile_() {
   const file = files.next();
   if (files.hasNext()) {
     throw new Error(
-      'More than one "' + CSV_FILE_NAME + '" in Drive - delete or rename the extras.',
+      'More than one "' +
+        CSV_FILE_NAME +
+        '" in Drive - delete or rename the extras.',
     );
   }
   return file;
@@ -279,7 +264,10 @@ function sendCsvBatch() {
 
 function runCsvBatch_(dryRun) {
   const file = findCsvFile_();
-  const text = file.getBlob().getDataAsString("UTF-8").replace(/^\uFEFF/, "");
+  const text = file
+    .getBlob()
+    .getDataAsString("UTF-8")
+    .replace(/^\uFEFF/, "");
   const rows = Utilities.parseCsv(text).filter(function (r) {
     return r.some(function (c) {
       return String(c).trim() !== "";
