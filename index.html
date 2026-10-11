@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Speedup — Pickleball Tournament Manager</title>
+    <title>Speedup — Online Pickleball Tournament Manager</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="apple-touch-icon" href="assets/favicon-180.png" />
     <meta name="theme-color" content="#2f7d3f" />
@@ -53,6 +53,27 @@
       .hero-brand-sub {
         font-weight: 600;
         color: var(--ink);
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 7px 16px;
+        margin-bottom: 20px;
+        border-radius: 999px;
+        background: var(--lift-1);
+        border: 1px solid #d9e6d6;
+        color: var(--accent-ink);
+        font-size: 0.84rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+      .hero-badge i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #2bd671;
+        box-shadow: 0 0 0 4px rgba(43, 214, 113, 0.22);
       }
 
       * {
@@ -248,6 +269,9 @@
         position: relative;
         z-index: 1;
       }
+      .shot picture {
+        display: block;
+      }
 
       .hero-shot {
         max-width: 1120px;
@@ -326,6 +350,13 @@
       .feat.rose .panel {
         background: var(--lift-4);
       }
+      /* explicit tints, so the colors keep alternating however many sections sit between */
+      .feat.mint .panel {
+        background: var(--lift-1);
+      }
+      .feat.lilac .panel {
+        background: var(--lift-3);
+      }
       .feat .panel.flip {
         grid-template-columns: 1.5fr 0.85fr;
       }
@@ -370,6 +401,84 @@
         .feat .panel.flip .copy {
           order: 0;
         }
+      }
+
+      /* Tie-break section: switch between the double-tie and triple-tie screenshots */
+      .tie-view {
+        min-width: 0;
+      }
+      .tie-tabs {
+        display: inline-flex;
+        gap: 4px;
+        padding: 4px;
+        margin-bottom: 14px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+      }
+      .tie-tab {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--muted);
+        padding: 8px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .tie-tab:hover {
+        color: var(--ink);
+      }
+      .tie-tab[aria-selected="true"],
+      .tie-tab[aria-pressed="true"] {
+        background: var(--accent);
+        color: #fff;
+      }
+      .tie-tab:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .tie-panel[hidden] {
+        display: none;
+      }
+      .feat .tie-cap {
+        font-size: 0.9rem;
+        margin: 14px 4px 0;
+      }
+
+      /* E-signature section: referee sign-off + official scoresheet, side by side in phone frames */
+      .sign-phones {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 28px clamp(18px, 3vw, 34px);
+        min-width: 0;
+      }
+      .sign-phones figure {
+        margin: 0;
+        text-align: center;
+      }
+      .sign-phones .phone-device {
+        width: 292px;
+        max-width: 78vw;
+      }
+      .sign-view {
+        min-width: 0;
+      }
+      /* the one-at-a-time switcher only exists on phones (see the mobile block) */
+      .sign-tabs {
+        display: none;
+      }
+      .sign-phones figcaption {
+        margin-top: 16px;
+        font-size: 0.88rem;
+        color: var(--muted);
       }
 
       /* ---------------- Benefits ---------------- */
@@ -640,6 +749,7 @@
         text-align: center;
         padding-top: 90px;
         padding-bottom: 40px;
+        overflow-x: clip; /* the tilted sticker never causes sideways scroll */
       }
       .phone h2 {
         font-size: clamp(1.9rem, 4.6vw, 2.9rem);
@@ -678,36 +788,93 @@
         fill: var(--accent);
         flex-shrink: 0;
       }
+      /* ---------------- Smartphone frame (used by every phone screenshot) ---------------- */
       .phone-device {
+        --bez: 10px;
         position: relative;
-        width: 258px;
-        max-width: 78vw;
         margin: 0 auto;
-        padding: 10px;
-        border-radius: 42px;
-        background: #171c17;
+        padding: var(--bez);
+        border: solid transparent;
+        border-width: 0 3px; /* side-button strip: the buttons are painted into it */
+        border-radius: 58px;
+        overflow: visible;
+        background:
+          linear-gradient(to bottom, transparent 0 150px, #7a827a 150px 214px, transparent 214px)
+            right / 3px 100% no-repeat border-box,
+          linear-gradient(
+              to bottom,
+              transparent 0 92px,
+              #7a827a 92px 114px,
+              transparent 114px 148px,
+              #7a827a 148px 200px,
+              transparent 200px 210px,
+              #7a827a 210px 262px,
+              transparent 262px
+            )
+            left / 3px 100% no-repeat border-box,
+          linear-gradient(145deg, #6a726a 0%, #1b211b 16%, #0d110d 50%, #1d241d 84%, #5d655d 100%)
+            padding-box;
         box-shadow:
-          0 0 0 2px #2b322b,
-          0 44px 90px -34px rgba(20, 40, 20, 0.5);
+          inset 0 0 0 1.5px rgba(255, 255, 255, 0.24),
+          inset 0 0 0 4px #050705,
+          0 56px 90px -38px rgba(20, 40, 20, 0.55),
+          0 22px 36px -26px rgba(0, 0, 0, 0.4);
       }
+      /* camera island */
       .phone-device::before {
-        /* notch */
         content: "";
         position: absolute;
-        top: 12px;
+        top: calc(var(--bez) + 9px);
         left: 50%;
         transform: translateX(-50%);
-        width: 46%;
-        height: 22px;
-        background: #171c17;
-        border-radius: 0 0 16px 16px;
-        z-index: 2;
+        width: 29%;
+        height: 25px;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 82% 50%, #1f3346 0 3px, #0a0e12 3.6px, transparent 4.4px),
+          #050705;
+        z-index: 4;
+      }
+      /* glass glare + home indicator */
+      .phone-device::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 3;
+        background:
+          linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='5'%3E%3Crect width='112' height='5' rx='2.5' fill='%23121712'/%3E%3C/svg%3E") center bottom 15px / 112px 5px no-repeat;
       }
       .phone-screen {
-        border-radius: 34px;
-        overflow: hidden;
-        background: var(--surface);
+        position: relative;
         display: block;
+        min-height: 0;
+        border-radius: 48px;
+        overflow: hidden;
+        background: #fff;
+        padding: 42px 0 20px; /* status bar on top, home-indicator strip below */
+      }
+      /* status bar */
+      .phone-screen::before {
+        content: "9:41";
+        text-align: left;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 42px;
+        padding: 13px 0 0 30px;
+        font: 600 14px/20px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        letter-spacing: -0.01em;
+        color: #111;
+        z-index: 2;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='62' height='13' viewBox='0 0 62 13'%3E%3Cg fill='%23111'%3E%3Crect x='0' y='8' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='5.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='3' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='.5' width='3' height='11.5' rx='.8'/%3E%3Cpath d='M27 3.2c2.2 0 4.2.9 5.7 2.4l-1.1 1.1A6.6 6.6 0 0 0 27 4.8c-1.8 0-3.4.7-4.6 1.9l-1.1-1.1A8.2 8.2 0 0 1 27 3.2zm0 3.3c1.3 0 2.5.5 3.4 1.4l-1.1 1.1a3.5 3.5 0 0 0-4.6 0l-1.1-1.1c.9-.9 2.1-1.4 3.4-1.4zm0 3.3c.5 0 1 .2 1.3.6L27 11.7l-1.3-1.3c.3-.4.8-.6 1.3-.6z'/%3E%3C/g%3E%3Crect x='37.5' y='1' width='21' height='11' rx='3.2' fill='none' stroke='%23111' stroke-opacity='.45'/%3E%3Crect x='39' y='2.5' width='16' height='8' rx='2' fill='%23111'/%3E%3Crect x='59.5' y='4.5' width='1.8' height='4' rx='.9' fill='%23111' fill-opacity='.5'/%3E%3C/svg%3E") right 28px top 15px / 62px 13px no-repeat;
+      }
+      .phone-device {
+        width: 360px;
+        max-width: 86vw;
       }
       .phone-screen img {
         width: 100%;
@@ -716,8 +883,8 @@
       }
       .phone-deco {
         position: absolute;
-        top: -54px;
-        right: -38px;
+        top: 30px;
+        right: -132px;
         width: 156px;
         z-index: 3;
         transform: rotate(13deg);
@@ -738,9 +905,18 @@
           margin-bottom: 40px;
         }
         .phone-deco {
-          width: 128px;
-          top: -44px;
-          right: -20px;
+          width: 112px;
+          top: auto;
+          bottom: -34px;
+          right: -4px;
+        }
+      }
+      @media (max-width: 380px) {
+        /* keep the sticker inside very narrow screens (it used to push the page wider) */
+        .phone-deco {
+          width: 96px;
+          bottom: -30px;
+          right: -2px;
         }
       }
 
@@ -984,28 +1160,32 @@
       }
 
       @media (max-width: 640px) {
+        /* smaller, tucked into the corner, so they cover less of the page */
         .fab-stack {
-          right: 16px;
-          bottom: 16px;
-          gap: 10px;
+          right: 12px;
+          bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+          gap: 8px;
         }
         .fab {
-          height: 54px;
-          max-width: 54px;
+          height: 46px;
+          max-width: 46px;
         }
         .fab__icon {
-          flex-basis: 54px;
-          width: 54px;
-          height: 54px;
+          flex-basis: 46px;
+          width: 46px;
+          height: 46px;
         }
         .fab__icon svg {
-          width: 27px;
-          height: 27px;
+          width: 23px;
+          height: 23px;
+        }
+        .fab__icon::before {
+          inset: 9px;
         }
         /* no expand-on-tap on mobile */
         .fab:hover,
         .fab:focus-visible {
-          max-width: 54px;
+          max-width: 46px;
         }
         .fab:hover .fab__label,
         .fab:focus-visible .fab__label {
@@ -1083,15 +1263,164 @@
           padding: 18px;
         }
 
-        /* Strip */
+        /* Strip: two tidy columns instead of five stacked lines */
         .strip {
-          flex-direction: column;
-          gap: 7px;
-          padding: 28px 0 4px;
-          font-size: 0.86rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          align-items: stretch;
+          gap: 10px;
+          padding: 28px 22px 4px;
+          font-size: 0.82rem;
+          line-height: 1.35;
+          text-align: center;
         }
         .strip .sep {
           display: none;
+        }
+        .strip > span:not(.sep) {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 11px 8px;
+          background: var(--surface);
+          border: 1px solid var(--line);
+          border-radius: 12px;
+        }
+        .strip > :last-child {
+          grid-column: 1 / -1;
+        }
+
+        /* Screenshots swap to phone-sized captures of the real mobile UI, shown in a smartphone */
+        .frame-m {
+          --bez: 10px;
+          position: relative;
+          margin: 0 auto;
+          padding: var(--bez);
+          border: solid transparent;
+          border-width: 0 3px; /* side-button strip: the buttons are painted into it */
+          border-radius: 58px;
+          overflow: visible;
+          background:
+            linear-gradient(to bottom, transparent 0 150px, #7a827a 150px 214px, transparent 214px)
+              right / 3px 100% no-repeat border-box,
+            linear-gradient(
+                to bottom,
+                transparent 0 92px,
+                #7a827a 92px 114px,
+                transparent 114px 148px,
+                #7a827a 148px 200px,
+                transparent 200px 210px,
+                #7a827a 210px 262px,
+                transparent 262px
+              )
+              left / 3px 100% no-repeat border-box,
+            linear-gradient(145deg, #6a726a 0%, #1b211b 16%, #0d110d 50%, #1d241d 84%, #5d655d 100%)
+              padding-box;
+          box-shadow:
+            inset 0 0 0 1.5px rgba(255, 255, 255, 0.24),
+            inset 0 0 0 4px #050705,
+            0 56px 90px -38px rgba(20, 40, 20, 0.55),
+            0 22px 36px -26px rgba(0, 0, 0, 0.4);
+        }
+        /* camera island */
+        .frame-m::before {
+          content: "";
+          position: absolute;
+          top: calc(var(--bez) + 9px);
+          left: 50%;
+          transform: translateX(-50%);
+          width: 29%;
+          height: 25px;
+          border-radius: 999px;
+          background:
+            radial-gradient(circle at 82% 50%, #1f3346 0 3px, #0a0e12 3.6px, transparent 4.4px),
+            #050705;
+          z-index: 4;
+        }
+        /* glass glare + home indicator */
+        .frame-m::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          z-index: 3;
+          background:
+            linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='5'%3E%3Crect width='112' height='5' rx='2.5' fill='%23121712'/%3E%3C/svg%3E") center bottom 15px / 112px 5px no-repeat;
+        }
+        .frame-m .shot {
+          position: relative;
+          display: block;
+          min-height: 0;
+          border-radius: 48px;
+          overflow: hidden;
+          background: #fff;
+          padding: 42px 0 20px; /* status bar on top, home-indicator strip below */
+        }
+        /* status bar */
+        .frame-m .shot::before {
+          content: "9:41";
+        text-align: left;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 42px;
+          padding: 13px 0 0 30px;
+          font: 600 14px/20px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+          letter-spacing: -0.01em;
+          color: #111;
+          z-index: 2;
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='62' height='13' viewBox='0 0 62 13'%3E%3Cg fill='%23111'%3E%3Crect x='0' y='8' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='5.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='3' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='.5' width='3' height='11.5' rx='.8'/%3E%3Cpath d='M27 3.2c2.2 0 4.2.9 5.7 2.4l-1.1 1.1A6.6 6.6 0 0 0 27 4.8c-1.8 0-3.4.7-4.6 1.9l-1.1-1.1A8.2 8.2 0 0 1 27 3.2zm0 3.3c1.3 0 2.5.5 3.4 1.4l-1.1 1.1a3.5 3.5 0 0 0-4.6 0l-1.1-1.1c.9-.9 2.1-1.4 3.4-1.4zm0 3.3c.5 0 1 .2 1.3.6L27 11.7l-1.3-1.3c.3-.4.8-.6 1.3-.6z'/%3E%3C/g%3E%3Crect x='37.5' y='1' width='21' height='11' rx='3.2' fill='none' stroke='%23111' stroke-opacity='.45'/%3E%3Crect x='39' y='2.5' width='16' height='8' rx='2' fill='%23111'/%3E%3Crect x='59.5' y='4.5' width='1.8' height='4' rx='.9' fill='%23111' fill-opacity='.5'/%3E%3C/svg%3E") right 28px top 15px / 62px 13px no-repeat;
+        }
+        .frame-m {
+          width: min(100%, 340px);
+        }
+        .frame-m .bar {
+          display: none;
+        }
+
+        /* Phone showcase: tags that fit two to a row */
+        .phone-tags {
+          gap: 8px;
+        }
+        .phone-tag {
+          padding: 7px 13px;
+          font-size: 0.82rem;
+        }
+
+        /* Sign: one phone at a time, with a switcher */
+        .sign-tabs {
+          display: flex;
+          width: 100%;
+          margin-bottom: 18px;
+        }
+        .sign-tabs .tie-tab {
+          flex: 1;
+          padding: 10px 8px;
+        }
+        .sign-phones figure {
+          display: none;
+        }
+        .sign-phones figure.is-active {
+          display: block;
+        }
+        .sign-phones .phone-device {
+          width: min(100%, 320px);
+          max-width: none;
+        }
+        .phone-device {
+          width: min(100%, 340px);
+          max-width: none;
+        }
+        .tie-tabs {
+          display: flex;
+          width: 100%;
+        }
+        .tie-tabs .tie-tab {
+          flex: 1;
+          padding: 10px 8px;
         }
 
         /* Mission */
@@ -1603,13 +1932,17 @@
 
     <!-- HERO -->
     <header class="wrap hero">
+      <div class="hero-badge reveal">
+        <i aria-hidden="true"></i>Online platform &middot; nothing to install
+      </div>
       <h1 class="reveal">Run the whole tournament from one screen.</h1>
       <p class="reveal">
         <span class="brand-font hero-brand">Speedup</span
-        ><span class="hero-brand-sub">Tournament Manager</span> handles doubles
-        pickleball events end to end &mdash; team rosters and payments,
-        round-robin pool play, live standings, and an auto-advancing bracket. No
-        spreadsheets, no scramble.
+        ><span class="hero-brand-sub">Tournament Manager</span> is an online
+        platform that runs doubles pickleball events end to end &mdash; team
+        rosters and payments, round-robin pool play, live standings, and an
+        auto-advancing bracket, all from your browser. No spreadsheets, no
+        scramble.
       </p>
       <div class="cta-row reveal">
         <a class="btn btn-primary" href="#how">See how it works</a>
@@ -1618,30 +1951,38 @@
     </header>
 
     <div class="wrap hero-shot reveal">
-      <div class="frame">
+      <div class="frame frame-m">
         <div class="bar">
           <i></i><i></i><i></i><span>speedup — bracket</span>
         </div>
         <div class="shot" data-label="Auto-seeded single-elimination bracket">
-          <img
-            src="assets/7.png"
-            alt="Speedup bracket view: Round of 16 through Final plus a Bronze match, with a live match in progress and winners advancing automatically"
-            width="3300"
-            height="1800"
-            loading="lazy"
-            onerror="this.remove()"
-          />
+          <picture>
+            <source
+              media="(max-width: 640px)"
+              srcset="assets/m-hero.webp"
+              width="780"
+              height="1400"
+            />
+            <img
+              src="assets/7.webp"
+              alt="Speedup bracket: Round of 32 through the Final plus a Bronze match, with seeding labels and winners highlighted as they advance automatically"
+              width="3320"
+              height="1800"
+              loading="lazy"
+              onerror="this.remove()"
+            />
+          </picture>
         </div>
       </div>
     </div>
 
     <!-- STRIP -->
     <div class="wrap strip reveal">
-      <span><b>4&ndash;6</b> teams per pool</span><span class="sep"></span>
-      <span><b>Round of 8&ndash;64</b> brackets</span><span class="sep"></span>
-      <span><b>Live</b> spectator scoreboards</span><span class="sep"></span>
-      <span><b>Referee</b> tap-to-score mode</span><span class="sep"></span>
-      <span><b>Runs on your</b> local network</span>
+      <span><span class="strip-item"><b>4&ndash;6</b> teams per pool</span></span><span class="sep"></span>
+      <span><span class="strip-item"><b>Round of 8&ndash;64</b> brackets</span></span><span class="sep"></span>
+      <span><span class="strip-item"><b>Live</b> spectator scoreboards</span></span><span class="sep"></span>
+      <span><span class="strip-item"><b>Referee</b> tap-to-score mode</span></span><span class="sep"></span>
+      <span><span class="strip-item"><b>100% online</b> &mdash; nothing to install</span></span>
     </div>
 
     <!-- MISSION -->
@@ -1672,7 +2013,7 @@
               <li>QR self check-in &mdash; players scan, no login needed</li>
             </ul>
           </div>
-          <div class="frame">
+          <div class="frame frame-m">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — teams &amp; payments</span>
             </div>
@@ -1680,14 +2021,22 @@
               class="shot"
               data-label="Team rosters with per-player payment status"
             >
-              <img
-                src="assets/1.png"
-                alt="Speedup teams screen: pool rosters with per-player paid / partially paid / unpaid status and an Add Team form"
-                width="3320"
-                height="1800"
-                loading="lazy"
-                onerror="this.remove()"
-              />
+              <picture>
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/m-setup.webp"
+                  width="780"
+                  height="1400"
+                />
+                <img
+                  src="assets/1.webp"
+                  alt="Speedup teams screen: pool rosters with per-player paid / partially paid / unpaid status, an Add Team form and bulk CSV import"
+                  width="3320"
+                  height="1800"
+                  loading="lazy"
+                  onerror="this.remove()"
+                />
+              </picture>
             </div>
           </div>
         </div>
@@ -1712,22 +2061,109 @@
               <li>Optional per-match timers for pool play</li>
             </ul>
           </div>
-          <div class="frame">
+          <div class="frame frame-m">
             <div class="bar">
-              <i></i><i></i><i></i><span>speedup — referee scoring</span>
+              <i></i><i></i><i></i><span>speedup — pool play</span>
             </div>
             <div
               class="shot"
-              data-label="Referee tap-to-score card with live serve tracking"
+              data-label="Pool play schedule with courts, times, scores and match timers"
             >
-              <img
-                src="assets/4.png"
-                alt="Speedup referee scoring: a live pool match card with server-receiver-server number, a match timer and Update / Save buttons"
-                width="3320"
-                height="1800"
-                loading="lazy"
-                onerror="this.remove()"
-              />
+              <picture>
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/m-play.webp"
+                  width="780"
+                  height="1400"
+                />
+                <img
+                  src="assets/4.webp"
+                  alt="Speedup pool play schedule for one pool: round-robin matches with court, time, scores, winner and a running match timer, one match marked live"
+                  width="3320"
+                  height="1560"
+                  loading="lazy"
+                  onerror="this.remove()"
+                />
+              </picture>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE: SIGN (e-signature on the winning team's result) -->
+    <section id="sign" class="feat lilac reveal">
+      <div class="wrap">
+        <div class="kicker">Sign.</div>
+        <div class="panel">
+          <div class="copy">
+            <h2>A signed result, right on the court</h2>
+            <p>
+              When a match is decided, the winning team signs for it on the
+              referee&rsquo;s phone. Speedup attaches that signature to an
+              official scoresheet, so every result has a record behind it.
+            </p>
+            <ul>
+              <li>
+                Winners pick who&rsquo;s signing, then sign with a finger or
+                mouse &mdash; no paper, no pen
+              </li>
+              <li>
+                In a rush? Skip it &mdash; the scoresheet notes that it was
+                skipped
+              </li>
+              <li>
+                One official scoresheet per match: score, court, time, referee
+                and the signature, stamped with date and time
+              </li>
+              <li>
+                Print a receipt in one tap, for pool play and bracket matches
+                alike
+              </li>
+              <li>
+                Correct a score later and the old signature clears itself, so
+                it always matches the final result
+              </li>
+            </ul>
+          </div>
+          <div class="sign-view">
+            <div class="tie-tabs sign-tabs" role="group" aria-label="Choose a screen">
+              <button type="button" class="tie-tab" data-sign-tab="0" aria-pressed="true">
+                Referee signs
+              </button>
+              <button type="button" class="tie-tab" data-sign-tab="1" aria-pressed="false">
+                Scoresheet
+              </button>
+            </div>
+            <div class="sign-phones">
+              <figure class="is-active">
+                <div class="phone-device">
+                  <span class="phone-screen">
+                    <img
+                      src="assets/sign-signoff.webp"
+                      alt="Speedup referee phone screen after a match is finalized: a 'Who's signing for the win?' prompt with a winning player selected, a signature drawn on the pad, and Clear, Skip and Confirm Signature buttons"
+                      width="1320"
+                      height="2700"
+                      loading="lazy"
+                    />
+                  </span>
+                </div>
+                <figcaption>Winners sign on the referee&rsquo;s phone</figcaption>
+              </figure>
+              <figure>
+                <div class="phone-device">
+                  <span class="phone-screen">
+                    <img
+                      src="assets/sign-scoresheet.webp"
+                      alt="Speedup official match scoresheet: tournament and category, match number, court, time and referee, the final score with the winner marked, the winner's signature with a signed-by name and timestamp, and a Print receipt button"
+                      width="1320"
+                      height="2490"
+                      loading="lazy"
+                    />
+                  </span>
+                </div>
+                <figcaption>Official scoresheet, ready to print</figcaption>
+              </figure>
             </div>
           </div>
         </div>
@@ -1735,10 +2171,10 @@
     </section>
 
     <!-- FEATURE: TRACK -->
-    <section class="feat reveal">
+    <section class="feat mint reveal">
       <div class="wrap">
         <div class="kicker">Track.</div>
-        <div class="panel">
+        <div class="panel flip">
           <div class="copy">
             <h2>Standings update as scores land</h2>
             <p>
@@ -1746,13 +2182,13 @@
               match. The top two from each pool feed straight into the bracket.
             </p>
             <ul>
-              <li>Live pool standings with automatic tiebreakers</li>
+              <li>Live pool standings with automatic head-to-head tiebreakers</li>
               <li>Auto-seeded single-elimination bracket</li>
               <li>Winners advance themselves; Bronze match included</li>
               <li>Public read-only pages for spectators</li>
             </ul>
           </div>
-          <div class="frame">
+          <div class="frame frame-m">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — pool standings</span>
             </div>
@@ -1760,14 +2196,161 @@
               class="shot"
               data-label="Pool standings with the top two highlighted"
             >
-              <img
-                src="assets/5.png"
-                alt="Speedup pool standings: six pools side by side with wins, losses, points for/against and differential, top two of each pool highlighted"
-                width="3320"
-                height="1800"
-                loading="lazy"
-                onerror="this.remove()"
-              />
+              <picture>
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/m-track.webp"
+                  width="780"
+                  height="1400"
+                />
+                <img
+                  src="assets/5.webp"
+                  alt="Speedup pool standings: tie-break and bracket-seeding settings above Pools A to D, with wins, losses, points and differential, the top two of each pool highlighted and head-to-head notes where a tie was decided"
+                  width="3320"
+                  height="1880"
+                  loading="lazy"
+                  onerror="this.remove()"
+                />
+              </picture>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE: SETTLE (tie-breaks, shown on the public standings) -->
+    <section id="ties" class="feat lilac reveal">
+      <div class="wrap">
+        <div class="kicker">Settle.</div>
+        <div class="panel">
+          <div class="copy">
+            <h2>Ties, worked out where everyone can see</h2>
+            <p>
+              When two or three teams finish level on wins, Speedup ranks them
+              head-to-head first, then by point differential &mdash; and shows
+              its work on the public standings. No more &ldquo;why are they
+              ahead of us?&rdquo; at the desk.
+            </p>
+            <ul>
+              <li>
+                <b>Double tie:</b> the team that won the game between them ranks
+                higher, flagged with a trophy line and a head-to-head card with
+                the final score
+              </li>
+              <li>
+                <b>Triple tie:</b> a step-by-step breakdown &mdash; the games
+                between the tied teams, each team&rsquo;s numbers, and the rule
+                behind every place
+              </li>
+              <li>
+                Count point differential over the whole pool, or only the games
+                among the tied teams &mdash; set per category
+              </li>
+              <li>
+                Still level on every rule? The page says a draw or coin toss is
+                needed, then shows the result once you record it
+              </li>
+            </ul>
+          </div>
+          <div class="tie-view">
+            <div class="tie-tabs" role="tablist" aria-label="Tie-break examples">
+              <button
+                type="button"
+                class="tie-tab"
+                role="tab"
+                id="tieTab-double"
+                aria-selected="true"
+                aria-controls="tiePanel-double"
+              >
+                Double tie
+              </button>
+              <button
+                type="button"
+                class="tie-tab"
+                role="tab"
+                id="tieTab-triple"
+                aria-selected="false"
+                aria-controls="tiePanel-triple"
+                tabindex="-1"
+              >
+                Triple tie
+              </button>
+            </div>
+            <div
+              class="tie-panel"
+              role="tabpanel"
+              id="tiePanel-double"
+              aria-labelledby="tieTab-double"
+            >
+              <div class="frame frame-m">
+                <div class="bar">
+                  <i></i><i></i><i></i><span>speedup — public standings</span>
+                </div>
+                <div
+                  class="shot"
+                  data-label="Public head-to-head card for a two-team tie"
+                >
+                  <picture>
+                    <source
+                      media="(max-width: 640px)"
+                      srcset="assets/m-tie-double.webp"
+                      width="780"
+                      height="1400"
+                    />
+                    <img
+                      src="assets/tie-double.webp"
+                      alt="Speedup public standings with a head-to-head card open: two teams level on wins, the final score of the game between them, and why the winner ranks first despite the other team's better point differential"
+                      width="2000"
+                      height="1600"
+                      loading="lazy"
+                      onerror="this.remove()"
+                    />
+                  </picture>
+                </div>
+              </div>
+              <p class="tie-cap">
+                Two teams level on wins: the game they played against each other
+                decides &mdash; even when the other team has the better point
+                differential.
+              </p>
+            </div>
+            <div
+              class="tie-panel"
+              role="tabpanel"
+              id="tiePanel-triple"
+              aria-labelledby="tieTab-triple"
+              hidden
+            >
+              <div class="frame frame-m">
+                <div class="bar">
+                  <i></i><i></i><i></i><span>speedup — public standings</span>
+                </div>
+                <div
+                  class="shot"
+                  data-label="Public tie-break breakdown for a three-way tie"
+                >
+                  <picture>
+                    <source
+                      media="(max-width: 640px)"
+                      srcset="assets/m-tie-triple.webp"
+                      width="780"
+                      height="1800"
+                    />
+                    <img
+                      src="assets/tie-triple.webp"
+                      alt="Speedup public standings with a three-way tie-break open: the games between the three teams, each team's numbers, and a step-by-step explanation of how every place was decided"
+                      width="2000"
+                      height="1600"
+                      loading="lazy"
+                      onerror="this.remove()"
+                    />
+                  </picture>
+                </div>
+              </div>
+              <p class="tie-cap">
+                Three teams level: the games between them, each team&rsquo;s
+                numbers, and the rule behind every place &mdash; step by step.
+              </p>
             </div>
           </div>
         </div>
@@ -1790,22 +2373,31 @@
               <li>Public pool play, standings and bracket pages</li>
               <li>Filter to a single pool or see them all at once</li>
               <li>Combined master schedule across pools and rounds</li>
-              <li>No internet required &mdash; serve it on the venue Wi-Fi</li>
+              <li>Tie-break breakdowns players can open themselves</li>
+              <li>One online link for everyone &mdash; or serve it on the venue Wi-Fi</li>
             </ul>
           </div>
-          <div class="frame">
+          <div class="frame frame-m">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — public standings</span>
             </div>
             <div class="shot" data-label="Public standings page for spectators">
-              <img
-                src="assets/6.png"
-                alt="Speedup public standings page with a pool filter, showing wins, losses and point differential per team"
-                width="3320"
-                height="1800"
-                loading="lazy"
-                onerror="this.remove()"
-              />
+              <picture>
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/m-share.webp"
+                  width="780"
+                  height="1520"
+                />
+                <img
+                  src="assets/6.webp"
+                  alt="Speedup public standings page with a pool filter, showing wins, losses and point differential per team, with trophy notes where a head-to-head result decided the order"
+                  width="3320"
+                  height="1800"
+                  loading="lazy"
+                  onerror="this.remove()"
+                />
+              </picture>
             </div>
           </div>
         </div>
@@ -1843,7 +2435,7 @@
               d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120ZM254-346l-84-86q59-59 138.5-93.5T480-560q92 0 171.5 35T790-431l-84 85q-44-44-102-69t-124-25q-66 0-124 25t-102 69ZM84-516 0-602q92-94 215-146t265-52q142 0 265 52t215 146l-84 86q-77-77-178.5-120.5T480-680q-112 0-213.5 43.5T84-516Z"
             />
           </svg>
-          Runs on venue Wi-Fi
+          Online, from anywhere
         </span>
       </div>
       <div class="phone-device">
@@ -1852,10 +2444,10 @@
         </span>
         <span class="phone-screen">
           <img
-            src="assets/3.png"
-            alt="Speedup referee scoring on a phone: a live pool match card with score steppers, server-receiver-server number and a match timer"
+            src="assets/3.webp"
+            alt="Speedup live scoring on a phone: a live pool match with the serving player highlighted, R/L court side, score steppers, server-receiver-server number, match timer and Update / Save buttons"
             width="1320"
-            height="2868"
+            height="1770"
             loading="lazy"
           />
         </span>
@@ -1878,24 +2470,26 @@
           <div class="ico">&#128241;</div>
           <h3>Referees on their phones</h3>
           <p>
-            A tap-based scoring card that follows the real doubles serve rules
-            &mdash; no training session required.
+            A tap-based scoring card that follows the real doubles serve rules,
+            plus an on-screen signature for the winners &mdash; no training
+            session required.
           </p>
         </div>
         <div class="card">
           <div class="ico">&#128101;</div>
           <h3>Players stay informed</h3>
           <p>
-            Public pages and a QR check-in mean fewer "which court am I on?"
-            questions all day.
+            Public pages, a QR check-in and open tie-break breakdowns mean fewer
+            "which court am I on?" and "why are they ahead of us?" questions
+            all day.
           </p>
         </div>
         <div class="card">
           <div class="ico">&#127967;</div>
-          <h3>Works off the grid</h3>
+          <h3>Online, with an offline backup</h3>
           <p>
-            Self-hosted and lightweight. Run it from a laptop on the venue
-            network with no outside connection.
+            Open it from any browser, with nothing to install. Weak signal at the
+            venue? Run it from a laptop on the local network instead.
           </p>
         </div>
         <div class="card">
@@ -1988,6 +2582,19 @@
         </p>
       </details>
       <details>
+        <summary>How are ties broken, and can players see how?</summary>
+        <p>
+          Teams level on wins are ranked by head-to-head first &mdash; the game
+          they played against each other &mdash; then by point differential,
+          counted over the whole pool or only among the tied teams (you pick
+          per category). A two-team tie gets a trophy line and a head-to-head
+          card with the final score; a tie of three or more gets a step-by-step
+          breakdown. If teams are still level on every rule, the standings flag
+          it for a draw or coin toss and show the result once it's recorded.
+          All of it is on the public standings page, with no sign-in.
+        </p>
+      </details>
+      <details>
         <summary>Can I run several divisions at the same event?</summary>
         <p>
           Yes. Each division is a category with its own pool size, bracket size,
@@ -2005,11 +2612,25 @@
         </p>
       </details>
       <details>
-        <summary>Does it need an internet connection?</summary>
+        <summary>Can winners sign off on their result?</summary>
         <p>
-          No. Speedup is a self-hosted web app. On event day you run it from a
-          laptop and everyone connects over the venue's local network &mdash;
-          phones, tablets and the front-desk screen all hit the same address.
+          Yes. Once a match is decided, the winning team can sign for it on the
+          referee&rsquo;s phone &mdash; pick who&rsquo;s signing, then sign on
+          the screen with a finger or mouse. Speedup stores the signature on an
+          official scoresheet with the score, court, time and referee, and
+          organizers can print it. Signing is optional, and if a score is
+          corrected later the old signature is cleared, so a sign-off always
+          matches the final result.
+        </p>
+      </details>
+      <details>
+        <summary>Is Speedup an online platform? Do I need internet?</summary>
+        <p>
+          Yes &mdash; Speedup is an online platform. Organizers, referees and
+          players all open it in a web browser, with nothing to install, so
+          everyone sees the same live scores and standings. If the venue&rsquo;s
+          signal is poor, it can also run from a laptop on the local network, so
+          your event never depends on the venue&rsquo;s internet.
         </p>
       </details>
       <details>
@@ -2051,7 +2672,7 @@
         </div>
         <p class="footer-tagline">
           Planning a Pickleball Tournament? Manage registrations, pools,
-          brackets, live scores, and standings with Speedup.
+          brackets, live scores, and standings online with Speedup.
         </p>
         <div class="footer-contact">
           <a href="https://wa.me/639061223189" aria-label="WhatsApp +63 906 122 3189" title="WhatsApp">
@@ -2468,6 +3089,62 @@
         );
         items.forEach(function (el) {
           io.observe(el);
+        });
+      })();
+
+      /* ---- Tie-break section: double / triple tie tabs ---- */
+      (function () {
+        var tabs = Array.prototype.slice.call(
+          document.querySelectorAll(".tie-tab"),
+        );
+        if (!tabs.length) return;
+
+        function select(tab, focus) {
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.setAttribute("aria-selected", on ? "true" : "false");
+            t.tabIndex = on ? 0 : -1;
+            document.getElementById(t.getAttribute("aria-controls")).hidden =
+              !on;
+          });
+          if (focus) tab.focus();
+        }
+
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener("click", function () {
+            select(tab, false);
+          });
+          tab.addEventListener("keydown", function (e) {
+            var next;
+            if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
+            else if (e.key === "ArrowLeft")
+              next = tabs[(i - 1 + tabs.length) % tabs.length];
+            else if (e.key === "Home") next = tabs[0];
+            else if (e.key === "End") next = tabs[tabs.length - 1];
+            if (!next) return;
+            e.preventDefault();
+            select(next, true);
+          });
+        });
+      })();
+
+      /* ---- Sign section (phones): switch between the sign-off and scoresheet screens ---- */
+      (function () {
+        var buttons = Array.prototype.slice.call(
+          document.querySelectorAll("[data-sign-tab]"),
+        );
+        var figures = document.querySelectorAll(".sign-phones figure");
+        if (!buttons.length || !figures.length) return;
+        buttons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var index = Number(btn.getAttribute("data-sign-tab"));
+            buttons.forEach(function (b) {
+              b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+            });
+            figures.forEach(function (fig, i) {
+              fig.classList.toggle("is-active", i === index);
+            });
+          });
         });
       })();
 
