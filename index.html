@@ -54,27 +54,6 @@
         font-weight: 600;
         color: var(--ink);
       }
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        padding: 7px 16px;
-        margin-bottom: 20px;
-        border-radius: 999px;
-        background: var(--lift-1);
-        border: 1px solid #d9e6d6;
-        color: var(--accent-ink);
-        font-size: 0.84rem;
-        font-weight: 700;
-        letter-spacing: 0.01em;
-      }
-      .hero-badge i {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #2bd671;
-        box-shadow: 0 0 0 4px rgba(43, 214, 113, 0.22);
-      }
 
       * {
         box-sizing: border-box;
@@ -1932,9 +1911,6 @@
 
     <!-- HERO -->
     <header class="wrap hero">
-      <div class="hero-badge reveal">
-        <i aria-hidden="true"></i>Online platform &middot; nothing to install
-      </div>
       <h1 class="reveal">Run the whole tournament from one screen.</h1>
       <p class="reveal">
         <span class="brand-font hero-brand">Speedup</span
@@ -1982,7 +1958,7 @@
       <span><span class="strip-item"><b>Round of 8&ndash;64</b> brackets</span></span><span class="sep"></span>
       <span><span class="strip-item"><b>Live</b> spectator scoreboards</span></span><span class="sep"></span>
       <span><span class="strip-item"><b>Referee</b> tap-to-score mode</span></span><span class="sep"></span>
-      <span><span class="strip-item"><b>100% online</b> &mdash; nothing to install</span></span>
+      <span><span class="strip-item"><b>100% online</b> &mdash; open from any browser</span></span>
     </div>
 
     <!-- MISSION -->
@@ -2374,7 +2350,7 @@
               <li>Filter to a single pool or see them all at once</li>
               <li>Combined master schedule across pools and rounds</li>
               <li>Tie-break breakdowns players can open themselves</li>
-              <li>One online link for everyone &mdash; or serve it on the venue Wi-Fi</li>
+              <li>One shareable link that updates itself as scores land</li>
             </ul>
           </div>
           <div class="frame frame-m">
@@ -2485,11 +2461,12 @@
           </p>
         </div>
         <div class="card">
-          <div class="ico">&#127967;</div>
-          <h3>Online, with an offline backup</h3>
+          <div class="ico">&#127942;</div>
+          <h3>Everything in one place</h3>
           <p>
-            Open it from any browser, with nothing to install. Weak signal at the
-            venue? Run it from a laptop on the local network instead.
+            Rosters, payments, schedules, scores, standings and the bracket all
+            live in one app &mdash; nothing gets lost between spreadsheets and
+            group chats.
           </p>
         </div>
         <div class="card">
@@ -2563,6 +2540,16 @@
       <h2>What.<br />The.<br />FAQ?</h2>
 
       <details open>
+        <summary>What is Speedup?</summary>
+        <p>
+          Speedup Tournament Manager is an online app for running doubles
+          pickleball tournaments. Organizers set up divisions, teams and
+          payments; Speedup builds the pool schedules, keeps live standings and
+          seeds the bracket. Referees score from their phones, and players
+          follow pool play, standings and the bracket from a link.
+        </p>
+      </details>
+      <details>
         <summary>Do players need an account?</summary>
         <p>
           No. Only organizers and referees log in. Players check themselves in
@@ -2623,17 +2610,7 @@
           matches the final result.
         </p>
       </details>
-      <details>
-        <summary>Is Speedup an online platform? Do I need internet?</summary>
-        <p>
-          Yes &mdash; Speedup is an online platform. Organizers, referees and
-          players all open it in a web browser, with nothing to install, so
-          everyone sees the same live scores and standings. If the venue&rsquo;s
-          signal is poor, it can also run from a laptop on the local network, so
-          your event never depends on the venue&rsquo;s internet.
-        </p>
-      </details>
-      <details>
+            <details>
         <summary>What if a score is entered wrong?</summary>
         <p>
           A referee's live score can be updated freely until it's saved as
