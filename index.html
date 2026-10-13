@@ -248,9 +248,6 @@
         position: relative;
         z-index: 1;
       }
-      .shot picture {
-        display: block;
-      }
 
       .hero-shot {
         max-width: 1120px;
@@ -1269,97 +1266,6 @@
           grid-column: 1 / -1;
         }
 
-        /* Screenshots swap to phone-sized captures of the real mobile UI, shown in a smartphone */
-        .frame-m {
-          --bez: 10px;
-          position: relative;
-          margin: 0 auto;
-          padding: var(--bez);
-          border: solid transparent;
-          border-width: 0 3px; /* side-button strip: the buttons are painted into it */
-          border-radius: 58px;
-          overflow: visible;
-          background:
-            linear-gradient(to bottom, transparent 0 150px, #7a827a 150px 214px, transparent 214px)
-              right / 3px 100% no-repeat border-box,
-            linear-gradient(
-                to bottom,
-                transparent 0 92px,
-                #7a827a 92px 114px,
-                transparent 114px 148px,
-                #7a827a 148px 200px,
-                transparent 200px 210px,
-                #7a827a 210px 262px,
-                transparent 262px
-              )
-              left / 3px 100% no-repeat border-box,
-            linear-gradient(145deg, #6a726a 0%, #1b211b 16%, #0d110d 50%, #1d241d 84%, #5d655d 100%)
-              padding-box;
-          box-shadow:
-            inset 0 0 0 1.5px rgba(255, 255, 255, 0.24),
-            inset 0 0 0 4px #050705,
-            0 56px 90px -38px rgba(20, 40, 20, 0.55),
-            0 22px 36px -26px rgba(0, 0, 0, 0.4);
-        }
-        /* camera island */
-        .frame-m::before {
-          content: "";
-          position: absolute;
-          top: calc(var(--bez) + 9px);
-          left: 50%;
-          transform: translateX(-50%);
-          width: 29%;
-          height: 25px;
-          border-radius: 999px;
-          background:
-            radial-gradient(circle at 82% 50%, #1f3346 0 3px, #0a0e12 3.6px, transparent 4.4px),
-            #050705;
-          z-index: 4;
-        }
-        /* glass glare + home indicator */
-        .frame-m::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          z-index: 3;
-          background:
-            linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='5'%3E%3Crect width='112' height='5' rx='2.5' fill='%23121712'/%3E%3C/svg%3E") center bottom 15px / 112px 5px no-repeat;
-        }
-        .frame-m .shot {
-          position: relative;
-          display: block;
-          min-height: 0;
-          border-radius: 48px;
-          overflow: hidden;
-          background: #fff;
-          padding: 42px 0 20px; /* status bar on top, home-indicator strip below */
-        }
-        /* status bar */
-        .frame-m .shot::before {
-          content: "9:41";
-        text-align: left;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 42px;
-          padding: 13px 0 0 30px;
-          font: 600 14px/20px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-          letter-spacing: -0.01em;
-          color: #111;
-          z-index: 2;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='62' height='13' viewBox='0 0 62 13'%3E%3Cg fill='%23111'%3E%3Crect x='0' y='8' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='5.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='3' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='.5' width='3' height='11.5' rx='.8'/%3E%3Cpath d='M27 3.2c2.2 0 4.2.9 5.7 2.4l-1.1 1.1A6.6 6.6 0 0 0 27 4.8c-1.8 0-3.4.7-4.6 1.9l-1.1-1.1A8.2 8.2 0 0 1 27 3.2zm0 3.3c1.3 0 2.5.5 3.4 1.4l-1.1 1.1a3.5 3.5 0 0 0-4.6 0l-1.1-1.1c.9-.9 2.1-1.4 3.4-1.4zm0 3.3c.5 0 1 .2 1.3.6L27 11.7l-1.3-1.3c.3-.4.8-.6 1.3-.6z'/%3E%3C/g%3E%3Crect x='37.5' y='1' width='21' height='11' rx='3.2' fill='none' stroke='%23111' stroke-opacity='.45'/%3E%3Crect x='39' y='2.5' width='16' height='8' rx='2' fill='%23111'/%3E%3Crect x='59.5' y='4.5' width='1.8' height='4' rx='.9' fill='%23111' fill-opacity='.5'/%3E%3C/svg%3E") right 28px top 15px / 62px 13px no-repeat;
-        }
-        .frame-m {
-          width: min(100%, 340px);
-        }
-        .frame-m .bar {
-          display: none;
-        }
-
         /* Phone showcase: tags that fit two to a row */
         .phone-tags {
           gap: 8px;
@@ -1927,27 +1833,19 @@
     </header>
 
     <div class="wrap hero-shot reveal">
-      <div class="frame frame-m">
+      <div class="frame">
         <div class="bar">
           <i></i><i></i><i></i><span>speedup — bracket</span>
         </div>
         <div class="shot" data-label="Auto-seeded single-elimination bracket">
-          <picture>
-            <source
-              media="(max-width: 640px)"
-              srcset="assets/m-hero.webp"
-              width="780"
-              height="1400"
-            />
-            <img
-              src="assets/7.webp"
-              alt="Speedup bracket: Round of 32 through the Final plus a Bronze match, with seeding labels and winners highlighted as they advance automatically"
-              width="3320"
-              height="1800"
-              loading="lazy"
-              onerror="this.remove()"
-            />
-          </picture>
+          <img
+            src="assets/7.webp"
+            alt="Speedup bracket: Round of 32 through the Final plus a Bronze match, with seeding labels and winners highlighted as they advance automatically"
+            width="3320"
+            height="1800"
+            loading="lazy"
+            onerror="this.remove()"
+          />
         </div>
       </div>
     </div>
@@ -1989,7 +1887,7 @@
               <li>QR self check-in &mdash; players scan, no login needed</li>
             </ul>
           </div>
-          <div class="frame frame-m">
+          <div class="frame">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — teams &amp; payments</span>
             </div>
@@ -1997,22 +1895,14 @@
               class="shot"
               data-label="Team rosters with per-player payment status"
             >
-              <picture>
-                <source
-                  media="(max-width: 640px)"
-                  srcset="assets/m-setup.webp"
-                  width="780"
-                  height="1400"
-                />
-                <img
-                  src="assets/1.webp"
-                  alt="Speedup teams screen: pool rosters with per-player paid / partially paid / unpaid status, an Add Team form and bulk CSV import"
-                  width="3320"
-                  height="1800"
-                  loading="lazy"
-                  onerror="this.remove()"
-                />
-              </picture>
+              <img
+                src="assets/1.webp"
+                alt="Speedup teams screen: pool rosters with per-player paid / partially paid / unpaid status, an Add Team form and bulk CSV import"
+                width="3320"
+                height="1800"
+                loading="lazy"
+                onerror="this.remove()"
+              />
             </div>
           </div>
         </div>
@@ -2037,7 +1927,7 @@
               <li>Optional per-match timers for pool play</li>
             </ul>
           </div>
-          <div class="frame frame-m">
+          <div class="frame">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — pool play</span>
             </div>
@@ -2045,22 +1935,14 @@
               class="shot"
               data-label="Pool play schedule with courts, times, scores and match timers"
             >
-              <picture>
-                <source
-                  media="(max-width: 640px)"
-                  srcset="assets/m-play.webp"
-                  width="780"
-                  height="1400"
-                />
-                <img
-                  src="assets/4.webp"
-                  alt="Speedup pool play schedule for one pool: round-robin matches with court, time, scores, winner and a running match timer, one match marked live"
-                  width="3320"
-                  height="1560"
-                  loading="lazy"
-                  onerror="this.remove()"
-                />
-              </picture>
+              <img
+                src="assets/4.webp"
+                alt="Speedup pool play schedule for one pool: round-robin matches with court, time, scores, winner and a running match timer, one match marked live"
+                width="3320"
+                height="1560"
+                loading="lazy"
+                onerror="this.remove()"
+              />
             </div>
           </div>
         </div>
@@ -2164,7 +2046,7 @@
               <li>Public read-only pages for spectators</li>
             </ul>
           </div>
-          <div class="frame frame-m">
+          <div class="frame">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — pool standings</span>
             </div>
@@ -2172,22 +2054,14 @@
               class="shot"
               data-label="Pool standings with the top two highlighted"
             >
-              <picture>
-                <source
-                  media="(max-width: 640px)"
-                  srcset="assets/m-track.webp"
-                  width="780"
-                  height="1400"
-                />
-                <img
-                  src="assets/5.webp"
-                  alt="Speedup pool standings: tie-break and bracket-seeding settings above Pools A to D, with wins, losses, points and differential, the top two of each pool highlighted and head-to-head notes where a tie was decided"
-                  width="3320"
-                  height="1880"
-                  loading="lazy"
-                  onerror="this.remove()"
-                />
-              </picture>
+              <img
+                src="assets/5.webp"
+                alt="Speedup pool standings: tie-break and bracket-seeding settings above Pools A to D, with wins, losses, points and differential, the top two of each pool highlighted and head-to-head notes where a tie was decided"
+                width="3320"
+                height="1880"
+                loading="lazy"
+                onerror="this.remove()"
+              />
             </div>
           </div>
         </div>
@@ -2258,7 +2132,7 @@
               id="tiePanel-double"
               aria-labelledby="tieTab-double"
             >
-              <div class="frame frame-m">
+              <div class="frame">
                 <div class="bar">
                   <i></i><i></i><i></i><span>speedup — public standings</span>
                 </div>
@@ -2266,22 +2140,14 @@
                   class="shot"
                   data-label="Public head-to-head card for a two-team tie"
                 >
-                  <picture>
-                    <source
-                      media="(max-width: 640px)"
-                      srcset="assets/m-tie-double.webp"
-                      width="780"
-                      height="1400"
-                    />
-                    <img
-                      src="assets/tie-double.webp"
-                      alt="Speedup public standings with a head-to-head card open: two teams level on wins, the final score of the game between them, and why the winner ranks first despite the other team's better point differential"
-                      width="2000"
-                      height="1600"
-                      loading="lazy"
-                      onerror="this.remove()"
-                    />
-                  </picture>
+                  <img
+                    src="assets/tie-double.webp"
+                    alt="Speedup public standings with a head-to-head card open: two teams level on wins, the final score of the game between them, and why the winner ranks first despite the other team's better point differential"
+                    width="2000"
+                    height="1600"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
                 </div>
               </div>
               <p class="tie-cap">
@@ -2297,7 +2163,7 @@
               aria-labelledby="tieTab-triple"
               hidden
             >
-              <div class="frame frame-m">
+              <div class="frame">
                 <div class="bar">
                   <i></i><i></i><i></i><span>speedup — public standings</span>
                 </div>
@@ -2305,22 +2171,14 @@
                   class="shot"
                   data-label="Public tie-break breakdown for a three-way tie"
                 >
-                  <picture>
-                    <source
-                      media="(max-width: 640px)"
-                      srcset="assets/m-tie-triple.webp"
-                      width="780"
-                      height="1800"
-                    />
-                    <img
-                      src="assets/tie-triple.webp"
-                      alt="Speedup public standings with a three-way tie-break open: the games between the three teams, each team's numbers, and a step-by-step explanation of how every place was decided"
-                      width="2000"
-                      height="1600"
-                      loading="lazy"
-                      onerror="this.remove()"
-                    />
-                  </picture>
+                  <img
+                    src="assets/tie-triple.webp"
+                    alt="Speedup public standings with a three-way tie-break open: the games between the three teams, each team's numbers, and a step-by-step explanation of how every place was decided"
+                    width="2000"
+                    height="1600"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
                 </div>
               </div>
               <p class="tie-cap">
@@ -2353,27 +2211,19 @@
               <li>One shareable link that updates itself as scores land</li>
             </ul>
           </div>
-          <div class="frame frame-m">
+          <div class="frame">
             <div class="bar">
               <i></i><i></i><i></i><span>speedup — public standings</span>
             </div>
             <div class="shot" data-label="Public standings page for spectators">
-              <picture>
-                <source
-                  media="(max-width: 640px)"
-                  srcset="assets/m-share.webp"
-                  width="780"
-                  height="1520"
-                />
-                <img
-                  src="assets/6.webp"
-                  alt="Speedup public standings page with a pool filter, showing wins, losses and point differential per team, with trophy notes where a head-to-head result decided the order"
-                  width="3320"
-                  height="1800"
-                  loading="lazy"
-                  onerror="this.remove()"
-                />
-              </picture>
+              <img
+                src="assets/6.webp"
+                alt="Speedup public standings page with a pool filter, showing wins, losses and point differential per team, with trophy notes where a head-to-head result decided the order"
+                width="3320"
+                height="1800"
+                loading="lazy"
+                onerror="this.remove()"
+              />
             </div>
           </div>
         </div>
