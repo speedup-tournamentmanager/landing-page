@@ -858,13 +858,14 @@
         display: block;
       }
       .phone-deco {
+        /* sits on the phone's top-right corner, covering the signal / Wi-Fi / battery icons */
         position: absolute;
-        top: 30px;
-        right: -176px; /* fully clear of the phone's dark edge, so the banner tip never blends into it */
-        width: 156px;
+        top: -30px;
+        right: -4px;
+        width: 150px;
         z-index: 6;
-        transform: rotate(13deg);
-        /* thin light outline keeps the dark-green banner readable over anything it overlaps */
+        transform: rotate(9deg);
+        /* thin light outline keeps the dark-green banner readable over the dark bezel */
         filter: drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff)
           drop-shadow(0 16px 26px rgba(20, 40, 20, 0.3));
       }
@@ -873,15 +874,6 @@
         height: auto;
         display: block;
         margin-left: 15px;
-      }
-      @media (max-width: 820px) {
-        /* not enough room beside the phone: tuck it onto the phone's lower corner instead */
-        .phone-deco {
-          width: 120px;
-          top: auto;
-          bottom: 22px;
-          right: -6px;
-        }
       }
       @media (max-width: 640px) {
         .phone {
@@ -892,18 +884,17 @@
           margin-bottom: 40px;
         }
         .phone-deco {
-          width: 112px;
-          top: auto;
-          bottom: 22px;
-          right: -6px;
+          width: 142px;
+          top: -28px;
+          right: 4px;
         }
       }
       @media (max-width: 380px) {
         /* keep the sticker inside very narrow screens (it used to push the page wider) */
         .phone-deco {
-          width: 96px;
-          bottom: 22px;
-          right: -2px;
+          width: 130px;
+          top: -26px;
+          right: 8px;
         }
       }
 
