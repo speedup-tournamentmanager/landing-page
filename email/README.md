@@ -31,11 +31,20 @@ row, leave `sent` blank. Only `email` is required (plus the `sent` column).
   there, so re-running never double-sends. A failed row stays blank and is
   retried on the next run; an invalid address is marked `SKIPPED`.
 
-Both are in the **Speedup** menu that appears in the Sheet after a reload. Add
-new customers at the bottom and run again.
+Add new customers at the bottom and run again.
 
-Setup: in the Sheet, Extensions -> Apps Script, paste `Code.gs`, run
-`previewBatch()` once and approve the Gmail permissions.
+Setup, either way:
+
+- **From the Sheet:** Extensions -> Apps Script, paste `Code.gs`, leave
+  `SHEET_ID` empty. A **Speedup** menu with both actions appears in the Sheet
+  after a reload.
+- **By ID (any Apps Script project):** paste `Code.gs` and set `SHEET_ID` to the
+  Sheet's ID: the long text between `/d/` and `/edit` in its address (the whole
+  address also works). `SHEET_NAME` picks a tab other than the first. There is no
+  menu here; run `previewBatch` / `sendBatch` from the editor. Paste the real ID
+  in the Apps Script editor only, never in this repo.
+
+Then run `previewBatch()` once and approve the Gmail and Sheets permissions.
 Gmail cap: ~500 recipients/day (consumer), 2,000 (Workspace).
 
 ## Auto-reply to form submissions: `apps-script/AutoReply.gs`

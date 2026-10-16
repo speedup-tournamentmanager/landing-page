@@ -10,8 +10,10 @@
  *
  * ONE-TIME SETUP
  *   1. Create a Google Sheet for your customers (layout under "BULK SEND"
- *      below), then Extensions -> Apps Script and paste this file there. The
- *      customer list lives only in that Sheet, never in this public repo.
+ *      below). Then EITHER open Extensions -> Apps Script in that Sheet and
+ *      paste this file there, OR paste it into any Apps Script project and
+ *      set SHEET_ID below. The customer list lives only in that Sheet, never
+ *      in this public repo.
  *   2. First Run -> "Authorization required" -> Review permissions -> your
  *      account -> Advanced -> Go to (project) -> Allow.
  *   3. Optional: change DEMO_LINK below to your calendar / booking link.
@@ -26,6 +28,14 @@
 const SITE_URL = "https://speedup-tournamentmanager.github.io/landing-page";
 const TEMPLATE_URL = SITE_URL + "/email/demo-pricing-reply.html";
 const FROM_NAME = "Speedup Tournament Manager";
+
+// The customer Sheet: paste its ID (the long text between /d/ and /edit in the
+// Sheet's address; pasting the whole address also works). Leave "" only when
+// this script was opened from the Sheet itself (Extensions -> Apps Script).
+// Paste the real ID in the Apps Script editor only, not in the repo copy.
+const SHEET_ID = "";
+// Tab to read. Leave "" for the first tab.
+const SHEET_NAME = "";
 
 // Where the "Book your demo" button goes. Default opens WhatsApp with a ready
 // message; replace with a calendar link (Calendly, Google Calendar, ...) if you have one.
@@ -136,14 +146,43 @@ function fetchTemplate_() {
 //   name | email | request_type | contact_method | contact | sent
 //   (one customer per row; leave "sent" blank)
 //
-// Create the Sheet, then Extensions -> Apps Script and paste this file there.
 // Only "email" and "sent" must exist as columns; the rest fall back to defaults.
 //
 // previewBatch() only LOGS who would be emailed. sendBatch() (or the Speedup
-// menu in the Sheet) emails every row whose "sent" cell is empty and writes a
+// menu, when the script is opened from the Sheet) emails every row whose "sent" cell is empty and writes a
 // timestamp there, so re-running never double-sends. Add new customers at the
 // bottom and run again.
 // ---------------------------------------------------------------------------
+/** The customer sheet: by SHEET_ID if set, else the Sheet this script is attached to. */
+function getSheet_() {
+  const id = String(SHEET_ID).trim();
+  let ss;
+  if (id) {
+    const fromUrl = id.match(/\/d\/([a-zA-Z0-9_-]+)/); // accept the full address too
+    try {
+      ss = SpreadsheetApp.openById(fromUrl ? fromUrl[1] : id);
+    } catch (err) {
+      throw new Error(
+        "Could not open the Sheet for SHEET_ID. Check the ID, and that this " +
+          "Google account can edit that Sheet.",
+      );
+    }
+  } else {
+    ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) {
+      throw new Error(
+        "Paste your Google Sheet ID into SHEET_ID at the top of the script " +
+          "(or open the script from the Sheet: Extensions -> Apps Script).",
+      );
+    }
+  }
+  const name = String(SHEET_NAME).trim();
+  if (!name) return id ? ss.getSheets()[0] : ss.getActiveSheet();
+  const sheet = ss.getSheetByName(name);
+  if (!sheet) throw new Error('No tab named "' + name + '" in the Sheet.');
+  return sheet;
+}
+
 function previewBatch() {
   runBatch_(true);
 }
@@ -153,12 +192,7 @@ function sendBatch() {
 }
 
 function runBatch_(dryRun) {
-  const sheet = SpreadsheetApp.getActiveSheet();
-  if (!sheet) {
-    throw new Error(
-      "Bulk send only works inside a Google Sheet (Extensions -> Apps Script).",
-    );
-  }
+  const sheet = getSheet_();
   const values = sheet.getDataRange().getValues();
   const header = values.shift().map(function (h) {
     return String(h).trim().toLowerCase();
@@ -254,7 +288,11 @@ function runBatch_(dryRun) {
   );
 }
 
-/** Adds a "Speedup" menu to the Sheet so you can run the batch by click. */
+/**
+ * Adds a "Speedup" menu to the Sheet so you can run the batch by click. Only
+ * appears when the script is opened from the Sheet (Extensions -> Apps Script);
+ * with SHEET_ID in a separate project, run previewBatch / sendBatch from the editor.
+ */
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("Speedup")
