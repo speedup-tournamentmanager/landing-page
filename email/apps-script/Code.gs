@@ -9,8 +9,9 @@
  * after editing it: commit + push, wait for Pages to redeploy, then send.
  *
  * ONE-TIME SETUP
- *   1. New project at script.google.com, paste this file. Your customer list
- *      is email/customers.csv on GitHub Pages (see "SEND FROM CSV" below).
+ *   1. Create a Google Sheet for your customers (layout under "BULK SEND"
+ *      below), then Extensions -> Apps Script and paste this file there. The
+ *      customer list lives only in that Sheet, never in this public repo.
  *   2. First Run -> "Authorization required" -> Review permissions -> your
  *      account -> Advanced -> Go to (project) -> Allow.
  *   3. Optional: change DEMO_LINK below to your calendar / booking link.
@@ -129,24 +130,33 @@ function fetchTemplate_() {
 }
 
 // ---------------------------------------------------------------------------
-// 2) BULK SEND — from a Google Sheet (alternative to the CSV)
+// BULK SEND — customers live in a Google Sheet (never in this public repo)
 //
 // Sheet layout (row 1 = headers, exactly these words, any column order):
 //   name | email | request_type | contact_method | contact | sent
 //   (one customer per row; leave "sent" blank)
 //
-// Only "email" is required; the rest fall back to defaults. Run sendBatch (or use
-// the Speedup menu): it emails every row whose "sent" cell is empty and writes a
-// timestamp there, so re-running never double-sends. Add new rows at the bottom.
+// Create the Sheet, then Extensions -> Apps Script and paste this file there.
+// Only "email" and "sent" must exist as columns; the rest fall back to defaults.
+//
+// previewBatch() only LOGS who would be emailed. sendBatch() (or the Speedup
+// menu in the Sheet) emails every row whose "sent" cell is empty and writes a
+// timestamp there, so re-running never double-sends. Add new customers at the
+// bottom and run again.
 // ---------------------------------------------------------------------------
-function sendBatch() {
-  const template = fetchTemplate_();
+function previewBatch() {
+  runBatch_(true);
+}
 
+function sendBatch() {
+  runBatch_(false);
+}
+
+function runBatch_(dryRun) {
   const sheet = SpreadsheetApp.getActiveSheet();
   if (!sheet) {
     throw new Error(
-      "sendBatch only works inside a Google Sheet (Extensions -> Apps Script). " +
-        "In this standalone project use previewCsvBatch / sendCsvBatch instead.",
+      "Bulk send only works inside a Google Sheet (Extensions -> Apps Script).",
     );
   }
   const values = sheet.getDataRange().getValues();
@@ -167,122 +177,23 @@ function sendBatch() {
     return i < 0 ? "" : row[i];
   };
 
-  let sent = 0;
-  let skipped = 0;
-  for (let r = 0; r < values.length; r++) {
-    const row = values[r];
-    const email = String(row[iMail] || "").trim();
-    if (row[iSent] || !email) continue; // already sent or empty row
-
-    if (!isEmail_(email)) {
-      sheet.getRange(r + 2, iSent + 1).setValue("SKIPPED: invalid email");
-      skipped++;
-      continue;
-    }
-
-    if (MailApp.getRemainingDailyQuota() < 1) {
-      Logger.log("Daily Gmail quota reached — run again tomorrow.");
-      break;
-    }
-
-    const msg = buildEmail_(template, {
-      name: get(row, "name"),
-      email: email,
-      request_type: get(row, "request_type"),
-      contact_method: get(row, "contact_method"),
-      contact: get(row, "contact"),
-    });
-
-    GmailApp.sendEmail(email, msg.subject, msg.text, {
-      htmlBody: msg.html,
-      name: FROM_NAME,
-    });
-
-    sheet.getRange(r + 2, iSent + 1).setValue(new Date()); // +2: header + 1-index
-    SpreadsheetApp.flush();
-    sent++;
-    Utilities.sleep(1200); // be gentle with Gmail's rate limits
-  }
-
-  Logger.log("Batch done. Sent: %s, skipped: %s", sent, skipped);
-}
-
-// ---------------------------------------------------------------------------
-// 1) SEND FROM CSV — customers.csv hosted on GitHub Pages (main way)
-//
-// 1. Put your customers in email/customers.csv, commit + push, and wait for
-//    GitHub Pages to redeploy (a minute or two). Columns (row 1, exact words,
-//    any order):  name, email, request_type, contact_method, contact
-//    Only "email" is required.
-// 2. Run previewCsvBatch(): it only LOGS who would be emailed.
-// 3. Run sendCsvBatch(): emails everyone who hasn't been emailed yet. Sent
-//    addresses are remembered in this script's properties (key "sent:<email>"),
-//    so re-running never double-sends. Add new customers to the CSV, push, run again.
-//
-// NOTE: the repo and Pages site are public, so anything in customers.csv can be
-// read by anyone who knows the URL.
-// ---------------------------------------------------------------------------
-const CSV_URL = SITE_URL + "/email/customers.csv";
-
-function fetchCsvRows_() {
-  const res = UrlFetchApp.fetch(CSV_URL, { muteHttpExceptions: true });
-  if (res.getResponseCode() !== 200) {
-    throw new Error(
-      "Could not load customers.csv (" + res.getResponseCode() + "): " + CSV_URL,
-    );
-  }
-  const text = res.getContentText().replace(/^\uFEFF/, "");
-  const rows = Utilities.parseCsv(text).filter(function (r) {
-    return r.some(function (c) {
-      return String(c).trim() !== "";
-    });
-  });
-  if (rows.length < 1) throw new Error("customers.csv is empty.");
-  const header = rows.shift().map(function (h) {
-    return String(h).trim().toLowerCase();
-  });
-  if (header.indexOf("email") < 0) {
-    throw new Error("customers.csv header row must contain: email");
-  }
-  return { header: header, rows: rows };
-}
-
-function previewCsvBatch() {
-  runCsvBatch_(true);
-}
-
-function sendCsvBatch() {
-  runCsvBatch_(false);
-}
-
-function runCsvBatch_(dryRun) {
-  const csv = fetchCsvRows_();
-  const header = csv.header;
-  const iMail = header.indexOf("email");
-  const get = function (row, key) {
-    const i = header.indexOf(key);
-    return i < 0 ? "" : row[i] || "";
-  };
-
-  const store = PropertiesService.getScriptProperties();
   const template = dryRun ? null : fetchTemplate_();
   let sent = 0;
   let skipped = 0;
   let failed = 0;
 
-  for (let r = 0; r < csv.rows.length; r++) {
-    const row = csv.rows[r];
-    const line = r + 2; // header is line 1
+  for (let r = 0; r < values.length; r++) {
+    const row = values[r];
+    const line = r + 2; // +2: header row + 1-indexed rows
     const email = String(row[iMail] || "").trim();
-    if (!email) continue;
+    if (row[iSent] || !email) continue; // already sent or empty row
 
     if (!isEmail_(email)) {
-      Logger.log("Row %s: SKIPPED invalid email: %s", line, email);
-      skipped++;
-      continue;
-    }
-    if (store.getProperty("sent:" + email.toLowerCase())) {
-      Logger.log("Row %s: skipped (already sent) - %s", line, email);
+      if (dryRun) {
+        Logger.log("Row %s: would SKIP invalid email: %s", line, email);
+      } else {
+        sheet.getRange(line, iSent + 1).setValue("SKIPPED: invalid email");
+      }
       skipped++;
       continue;
     }
@@ -310,7 +221,7 @@ function runCsvBatch_(dryRun) {
     }
 
     if (MailApp.getRemainingDailyQuota() < 1) {
-      Logger.log("Daily Gmail quota reached - run again tomorrow.");
+      Logger.log("Daily Gmail quota reached — run again tomorrow.");
       break;
     }
 
@@ -320,11 +231,13 @@ function runCsvBatch_(dryRun) {
         htmlBody: msg.html,
         name: FROM_NAME,
       });
-      store.setProperty("sent:" + email.toLowerCase(), new Date().toISOString());
+      sheet.getRange(line, iSent + 1).setValue(new Date());
+      SpreadsheetApp.flush();
       Logger.log("Row %s: sent to %s <%s>", line, fields.name || "there", email);
       sent++;
     } catch (err) {
-      // one bad address must not stop the rest of the batch
+      // one bad address must not stop the rest; its "sent" cell stays empty,
+      // so the next run retries it
       Logger.log("Row %s: FAILED for %s - %s", line, email, err.message);
       failed++;
     }
@@ -341,25 +254,11 @@ function runCsvBatch_(dryRun) {
   );
 }
 
-/**
- * Forget every "already sent" flag so the next sendCsvBatch emails EVERYONE in
- * the CSV again. Use only while testing (e.g. to re-send to your own address).
- */
-function clearSentFlags() {
-  const store = PropertiesService.getScriptProperties();
-  const keys = Object.keys(store.getProperties()).filter(function (k) {
-    return k.indexOf("sent:") === 0;
-  });
-  keys.forEach(function (k) {
-    store.deleteProperty(k);
-  });
-  Logger.log("Cleared %s sent flag(s).", keys.length);
-}
-
-/** Adds a "Speedup" menu to the Sheet so you can run sendBatch by click. */
+/** Adds a "Speedup" menu to the Sheet so you can run the batch by click. */
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("Speedup")
+    .addItem("Preview (log only, sends nothing)", "previewBatch")
     .addItem("Send replies (unsent rows)", "sendBatch")
     .addToUi();
 }

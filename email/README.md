@@ -16,27 +16,26 @@ Google Apps Script that fetches the hosted template, fills the placeholders
 (`{{NAME}}`, `{{REQUEST_TYPE}}`, `{{CONTACT_METHOD}}`, `{{CONTACT}}`, `{{DEMO_LINK}}`,
 `{{SITE_URL}}`) and sends it from your Gmail.
 
-- `sendBatch()` — Google Sheet with headers `name, email, request_type,
-  contact_method, contact, sent`. Sends every row whose `sent` is empty and
-  stamps the time, so it never double-sends. Only `email` is required.
+### Customer list: a Google Sheet
 
-- `previewCsvBatch()` / `sendCsvBatch()` — reads `email/customers.csv` from the
-  GitHub Pages site (same flow as the Tudlo script). Preview only logs; send emails
-  everyone not emailed yet and remembers them in the script's properties
-  (`sent:<email>`), so re-running never double-sends. `clearSentFlags()` forgets
-  them (testing only).
+The customer list lives only in a Google Sheet (same flow as the Tudlo script),
+never in this repo. The repo and Pages site are public, so anything committed
+here is readable by anyone.
 
-### Customer list: `customers.csv`
+Row 1 of the Sheet = these headers (exact words, any column order):
+`name, email, request_type, contact_method, contact, sent`. One customer per
+row, leave `sent` blank. Only `email` is required (plus the `sent` column).
 
-Columns: `name, email, request_type, contact_method, contact` (only `email` is
-required). Edit it, commit + push, wait for Pages to redeploy, then run
-`previewCsvBatch()` and `sendCsvBatch()`.
+- `previewBatch()` — only logs who would be emailed. Sends nothing.
+- `sendBatch()` — emails every row whose `sent` is empty and writes the time
+  there, so re-running never double-sends. A failed row stays blank and is
+  retried on the next run; an invalid address is marked `SKIPPED`.
 
-> The repo and Pages site are public, so anything in `customers.csv` is readable
-> by anyone with the URL.
+Both are in the **Speedup** menu that appears in the Sheet after a reload. Add
+new customers at the bottom and run again.
 
-Setup: paste `Code.gs` into script.google.com (CSV send) or a Sheet's
-Extensions -> Apps Script (batch), run once and approve the Gmail permissions.
+Setup: in the Sheet, Extensions -> Apps Script, paste `Code.gs`, run
+`previewBatch()` once and approve the Gmail permissions.
 Gmail cap: ~500 recipients/day (consumer), 2,000 (Workspace).
 
 ## Auto-reply to form submissions: `apps-script/AutoReply.gs`
