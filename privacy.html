@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy &amp; Cookies — Speedup</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon-180.png" />
+    <meta name="theme-color" content="#2f7d3f" />
+    <link rel="canonical" href="https://speeduppb.com/privacy.html" />
+    <meta
+      name="description"
+      content="What the Speedup Tournament Manager landing page collects, which cookies it uses only with your consent, and how to change your choice."
+    />
+    <style>
+      @font-face {
+        font-family: "Playball";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("fonts/playball-latin.woff2") format("woff2");
+      }
+
+      :root {
+        --bg: #fbfbf8;
+        --surface: #ffffff;
+        --ink: #171c17;
+        --muted: #5f6b5f;
+        --line: #e7e6df;
+        --accent: #2f7d3f;
+        --accent-ink: #1e5228;
+        --lift-1: #eef4ec;
+        --radius: 16px;
+        --font:
+          system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+          "Noto Sans", "Liberation Sans", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      p,
+      li,
+      dd {
+        overflow-wrap: break-word;
+      }
+      a {
+        color: var(--accent-ink);
+        text-underline-offset: 3px;
+      }
+      a:hover {
+        color: var(--accent);
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 0;
+      }
+      header img {
+        height: 72px;
+        width: auto;
+        display: block;
+      }
+      .back {
+        font-size: 0.92rem;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .back:hover {
+        color: var(--ink);
+      }
+
+      .kicker {
+        font-family: "Playball", cursive;
+        font-size: 1.5rem;
+        color: var(--accent);
+        margin-top: 28px;
+      }
+      h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        line-height: 1.08;
+        letter-spacing: -0.035em;
+        font-weight: 800;
+        margin: 2px 0 14px;
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 1.08rem;
+        max-width: 56ch;
+      }
+      .updated {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      section {
+        margin-top: 38px;
+        padding-top: 26px;
+        border-top: 1px solid var(--line);
+      }
+      h2 {
+        font-size: 1.2rem;
+        letter-spacing: -0.015em;
+        margin-bottom: 10px;
+      }
+      p + p,
+      p + ul,
+      ul + p {
+        margin-top: 12px;
+      }
+      ul {
+        padding-left: 1.2em;
+      }
+      li + li {
+        margin-top: 6px;
+      }
+
+      .cookies {
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        overflow: hidden;
+      }
+      .cookies > div {
+        padding: 14px 18px;
+      }
+      .cookies > div + div {
+        border-top: 1px solid var(--line);
+      }
+      .cookies dt {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--accent-ink);
+      }
+      .cookies dd {
+        font-size: 0.94rem;
+        color: var(--muted);
+      }
+
+      .choice {
+        margin-top: 14px;
+        padding: 16px 18px;
+        border-radius: var(--radius);
+        background: var(--lift-1);
+        font-size: 0.96rem;
+      }
+
+      footer {
+        margin-top: 56px;
+        padding: 28px 0 56px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.86rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a href="./" aria-label="Speedup home"
+          ><img src="assets/speedup-shield.png" alt="Speedup"
+        /></a>
+        <a class="back" href="./">&larr; Back to the site</a>
+      </header>
+
+      <main>
+        <p class="kicker">The short version</p>
+        <h1>Privacy &amp; cookies</h1>
+        <p class="lede">
+          We only ask for what we need to answer your request. Analytics
+          cookies are off unless you say yes, and you can change your mind at
+          any time.
+        </p>
+        <p class="updated">Last updated: 23 October 2026</p>
+
+        <section>
+          <h2>Who we are</h2>
+          <p>
+            This is the landing page of Speedup Tournament Manager
+            (speeduppb.com), an online platform for running pickleball
+            tournaments. For anything in this policy, write to
+            <a href="mailto:babsremoreras@gmail.com">babsremoreras@gmail.com</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>What we collect</h2>
+          <p>
+            <strong>When you send us a request.</strong> If you use the "Request
+            a demo" form we receive your name, email address, how you'd like to
+            be contacted (phone, WhatsApp or Telegram) and that number or
+            handle, what you need help with, and your optional message. It is
+            delivered to our inbox through Web3Forms, and we use it only to
+            reply to you. The form uses hCaptcha to block spam, which may check
+            your browser and IP address and may set its own cookies. If the
+            form can't send, your email app opens with the message filled in
+            instead.
+          </p>
+          <p>
+            <strong>Analytics, only if you accept.</strong> With your consent we
+            use Google Analytics 4 to count visits. It records which page you
+            viewed, roughly where in the world you are (country and city),
+            your device, browser and language, how you reached the site, and
+            whether you opened the request form, submitted it, or clicked a
+            WhatsApp, Telegram or email link. It never receives what you typed
+            into the form. We don't use advertising features, remarketing or
+            Google signals.
+          </p>
+          <p>
+            <strong>Hosting.</strong> This site is hosted on GitHub Pages,
+            which, like any web host, sees your IP address and browser details
+            when you load a page.
+          </p>
+          <p>We don't sell your data or show ads.</p>
+        </section>
+
+        <section>
+          <h2>Cookies and storage</h2>
+          <p>
+            If you decline (or ignore the banner), Google Analytics is never
+            loaded and none of the cookies below are set.
+          </p>
+          <dl class="cookies">
+            <div>
+              <dt>_ga</dt>
+              <dd>
+                Google Analytics. Tells returning visitors apart without
+                identifying you. Lasts up to 2 years. Set only after you accept.
+              </dd>
+            </div>
+            <div>
+              <dt>_ga_JPREMJE6Y8</dt>
+              <dd>
+                Google Analytics. Keeps track of your current visit. Lasts up to
+                2 years. Set only after you accept.
+              </dd>
+            </div>
+            <div>
+              <dt>speedup-analytics-consent</dt>
+              <dd>
+                Not a cookie: a note in your browser's local storage that
+                remembers whether you said yes or no, so we don't ask on every
+                visit. It stays on your device and is never sent to us or to
+                Google.
+              </dd>
+            </div>
+          </dl>
+        </section>
+
+        <section>
+          <h2>Your choice</h2>
+          <p>
+            You can accept or decline analytics when the banner appears, and
+            change it whenever you like. Withdrawing consent stops the
+            measurement and removes the Google Analytics cookies from your
+            browser.
+          </p>
+          <p class="choice">
+            <a href="./#cookie-settings">Change my cookie settings</a>
+            (also in the footer of every page).
+          </p>
+        </section>
+
+        <section>
+          <h2>How long we keep things</h2>
+          <ul>
+            <li>
+              Analytics data is kept in Google Analytics for 14 months, then
+              deleted automatically.
+            </li>
+            <li>
+              Messages from the request form are kept for as long as we need to
+              deal with your request and follow up, then deleted.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Who else handles your data</h2>
+          <ul>
+            <li>
+              <strong>Google</strong> (Google Analytics), only if you accept.
+              Google processes the data for us and may do so in countries
+              outside the Philippines, including the United States.
+            </li>
+            <li>
+              <strong>Web3Forms</strong> and <strong>hCaptcha</strong>, when you
+              use the request form.
+            </li>
+            <li><strong>GitHub</strong>, which hosts this site.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Your rights</h2>
+          <p>
+            Under the Philippine Data Privacy Act of 2012 (Republic Act No.
+            10173), and similar laws elsewhere, you can ask to see the personal
+            data we hold about you, have it corrected or deleted, object to how
+            it is used, and withdraw your consent. Email us and we'll respond.
+            If you're unhappy with our answer you can complain to the National
+            Privacy Commission (privacy.gov.ph).
+          </p>
+        </section>
+
+        <section>
+          <h2>Changes</h2>
+          <p>
+            If we change this policy, the new version goes on this page with a
+            new date at the top. If we start using anything that needs new
+            consent, we'll ask again.
+          </p>
+        </section>
+      </main>
+
+      <footer>
+        <p><span style="font-family: 'Playball', cursive; font-size: 1.2rem; color: var(--accent)">Speedup</span> &middot; speeduppb.com</p>
+      </footer>
+    </div>
+  </body>
+</html>
