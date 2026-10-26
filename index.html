@@ -1290,15 +1290,10 @@
         left: 24px;
         bottom: 24px;
         z-index: 60; /* above the floating buttons (50), below the demo modal (100) */
-        display: grid;
-        grid-template-columns: 56px 1fr;
-        gap: 14px;
-        align-items: start;
         width: min(420px, calc(100vw - 48px));
-        padding: 18px 20px 18px 16px;
+        padding: 18px 20px;
         background: var(--surface);
         border: 1px solid var(--line);
-        border-left: 5px solid var(--accent);
         border-radius: var(--radius);
         box-shadow: 0 24px 60px -20px rgba(20, 40, 20, 0.4);
         animation: consent-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -1306,16 +1301,11 @@
       .consent[hidden] {
         display: none;
       }
-      .consent-ball {
-        width: 56px;
-        height: auto;
-        margin-top: 2px;
-      }
       .consent-title {
-        font-size: 1.45rem;
-        font-weight: 400;
-        line-height: 1.15;
-        letter-spacing: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
         color: var(--accent);
         margin-bottom: 6px;
       }
@@ -2147,6 +2137,246 @@
       </div>
     </section>
 
+    <!-- FEATURE: SCHEDULE (Master Schedule + its display mode) -->
+    <section id="schedule" class="feat rose reveal">
+      <div class="wrap">
+        <div class="kicker">Schedule.</div>
+        <div class="panel">
+          <div class="copy">
+            <h2>Every match, on one schedule</h2>
+            <p>
+              The Master Schedule lists every pool and bracket match from every
+              category in one live view &mdash; who plays whom, on which court,
+              at what time. It updates itself as scores land, so nobody has to
+              keep refreshing.
+            </p>
+            <ul>
+              <li>
+                Search, or filter by category, round, court and match status
+              </li>
+              <li>
+                Live matches show the score and timer; finished ones show the
+                winner
+              </li>
+              <li>
+                Display mode puts the schedule on a venue screen: just the
+                matches and a clock, no menu or buttons
+              </li>
+            </ul>
+          </div>
+          <div class="tie-view">
+            <div
+              class="tie-tabs"
+              role="tablist"
+              aria-label="Master Schedule views"
+            >
+              <button
+                type="button"
+                class="tie-tab"
+                role="tab"
+                id="schedTab-table"
+                aria-selected="true"
+                aria-controls="schedPanel-table"
+              >
+                At the table
+              </button>
+              <button
+                type="button"
+                class="tie-tab"
+                role="tab"
+                id="schedTab-display"
+                aria-selected="false"
+                aria-controls="schedPanel-display"
+                tabindex="-1"
+              >
+                Venue screen
+              </button>
+            </div>
+            <div
+              class="tie-panel"
+              role="tabpanel"
+              id="schedPanel-table"
+              aria-labelledby="schedTab-table"
+            >
+              <div class="frame">
+                <div class="bar">
+                  <i></i><i></i><i></i><span>speedup — master schedule</span>
+                </div>
+                <div
+                  class="shot"
+                  data-label="Master Schedule with search, filters and live match cards"
+                >
+                  <img
+                    src="assets/master-schedule.webp"
+                    alt="Speedup Master Schedule: a court calling card, search and filters for category, round, court and status, then match cards for Pool A and Pool B showing finished results, a live match with its serve number and timer, and an upcoming match"
+                    width="3320"
+                    height="2010"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
+                </div>
+              </div>
+              <p class="tie-cap">
+                At the table: search and filter the whole event, or switch to a
+                table. Live matches carry their score and timer.
+              </p>
+            </div>
+            <div
+              class="tie-panel"
+              role="tabpanel"
+              id="schedPanel-display"
+              aria-labelledby="schedTab-display"
+              hidden
+            >
+              <div class="frame">
+                <div class="bar">
+                  <i></i><i></i><i></i><span>speedup — display mode</span>
+                </div>
+                <div
+                  class="shot"
+                  data-label="Master Schedule in display mode on a venue screen"
+                >
+                  <img
+                    src="assets/master-schedule-display.webp"
+                    alt="Speedup Master Schedule in display mode for a venue screen: the tournament name and a clock above a grid of match cards, with finished, live and upcoming matches and no menu or controls"
+                    width="3200"
+                    height="1580"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
+                </div>
+              </div>
+              <p class="tie-cap">
+                On the venue screen: the same schedule on its own, with a clock
+                and a full-screen button &mdash; nothing else in the way.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE: CALL (Court Board + its display mode) -->
+    <section id="courts" class="feat mint reveal">
+      <div class="wrap">
+        <div class="kicker">Call.</div>
+        <div class="panel flip">
+          <div class="tie-view">
+            <div
+              class="tie-tabs"
+              role="tablist"
+              aria-label="Court Board views"
+            >
+              <button
+                type="button"
+                class="tie-tab"
+                role="tab"
+                id="courtTab-table"
+                aria-selected="true"
+                aria-controls="courtPanel-table"
+              >
+                At the table
+              </button>
+              <button
+                type="button"
+                class="tie-tab"
+                role="tab"
+                id="courtTab-display"
+                aria-selected="false"
+                aria-controls="courtPanel-display"
+                tabindex="-1"
+              >
+                Venue screen
+              </button>
+            </div>
+            <div
+              class="tie-panel"
+              role="tabpanel"
+              id="courtPanel-table"
+              aria-labelledby="courtTab-table"
+            >
+              <div class="frame">
+                <div class="bar">
+                  <i></i><i></i><i></i><span>speedup — court board</span>
+                </div>
+                <div
+                  class="shot"
+                  data-label="Court Board with live, called and free courts"
+                >
+                  <img
+                    src="assets/court-board.webp"
+                    alt="Speedup Court Board: a Now calling strip for Courts 7 and 5, four live courts with scores and serve numbers, two called courts, and two free courts that each suggest the next match with a Call to Court button"
+                    width="3320"
+                    height="2150"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
+                </div>
+              </div>
+              <p class="tie-cap">
+                At the table: a free court suggests the next match, and one tap
+                calls it to the court.
+              </p>
+            </div>
+            <div
+              class="tie-panel"
+              role="tabpanel"
+              id="courtPanel-display"
+              aria-labelledby="courtTab-display"
+              hidden
+            >
+              <div class="frame">
+                <div class="bar">
+                  <i></i><i></i><i></i><span>speedup — display mode</span>
+                </div>
+                <div
+                  class="shot"
+                  data-label="Court Board in display mode on a venue screen"
+                >
+                  <img
+                    src="assets/court-board-display.webp"
+                    alt="Speedup Court Board in display mode for a venue screen: a Now calling strip, live scores on Courts 1 to 4, Courts 5 and 7 called, and Courts 6 and 8 free and waiting for the next match"
+                    width="3200"
+                    height="1650"
+                    loading="lazy"
+                    onerror="this.remove()"
+                  />
+                </div>
+              </div>
+              <p class="tie-cap">
+                On the venue screen: who is being called, and the live score on
+                every court &mdash; no controls in the way.
+              </p>
+            </div>
+          </div>
+          <div class="copy">
+            <h2>Courts that call their own next match</h2>
+            <p>
+              Turn on court calling for an event and the Court Board shows every
+              court at a glance: what is playing, who has been called, and which
+              courts are free. When one frees up, Speedup suggests the next
+              match.
+            </p>
+            <ul>
+              <li>
+                A free court offers the next match &mdash; same category first
+                &mdash; with a dropdown if someone has not shown up
+              </li>
+              <li>
+                Calling a match puts it on the venue screen&rsquo;s
+                &ldquo;Now calling&rdquo; strip and enters its court for the
+                referee
+              </li>
+              <li>
+                Optional chime, or the court and player names read aloud
+                &mdash; off until you turn it on
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FEATURE: SIGN (e-signature on the winning team's result) -->
     <section id="sign" class="feat lilac reveal">
       <div class="wrap">
@@ -2814,15 +3044,8 @@
       aria-describedby="consentText"
       hidden
     >
-      <img
-        class="consent-ball"
-        src="assets/speedup-ball.png"
-        alt=""
-        width="56"
-        height="45"
-      />
       <div>
-        <h2 class="consent-title brand-font" id="consentTitle">
+        <h2 class="consent-title" id="consentTitle">
           Keep score of our visits?
         </h2>
         <p id="consentText">
@@ -3189,43 +3412,48 @@
         });
       })();
 
-      /* ---- Tie-break section: double / triple tie tabs ---- */
+      /* ---- Tab groups (tie-break, Master Schedule, Court Board): each tablist switches only its own panels ---- */
       (function () {
-        // only the real ARIA tabs: the Sign switcher reuses the .tie-tab look but has no panels
-        var tabs = Array.prototype.slice.call(
-          document.querySelectorAll('.tie-tab[role="tab"]'),
-        );
-        if (!tabs.length) return;
-
-        function select(tab, focus) {
-          tabs.forEach(function (t) {
-            var on = t === tab;
-            t.setAttribute("aria-selected", on ? "true" : "false");
-            t.tabIndex = on ? 0 : -1;
-            var panel = document.getElementById(
-              t.getAttribute("aria-controls"),
+        // only real ARIA tablists: the Sign switcher reuses the .tie-tab look but has no panels
+        Array.prototype.forEach.call(
+          document.querySelectorAll('.tie-tabs[role="tablist"]'),
+          function (list) {
+            var tabs = Array.prototype.slice.call(
+              list.querySelectorAll('.tie-tab[role="tab"]'),
             );
-            if (panel) panel.hidden = !on;
-          });
-          if (focus) tab.focus();
-        }
+            if (!tabs.length) return;
 
-        tabs.forEach(function (tab, i) {
-          tab.addEventListener("click", function () {
-            select(tab, false);
-          });
-          tab.addEventListener("keydown", function (e) {
-            var next;
-            if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
-            else if (e.key === "ArrowLeft")
-              next = tabs[(i - 1 + tabs.length) % tabs.length];
-            else if (e.key === "Home") next = tabs[0];
-            else if (e.key === "End") next = tabs[tabs.length - 1];
-            if (!next) return;
-            e.preventDefault();
-            select(next, true);
-          });
-        });
+            function select(tab, focus) {
+              tabs.forEach(function (t) {
+                var on = t === tab;
+                t.setAttribute("aria-selected", on ? "true" : "false");
+                t.tabIndex = on ? 0 : -1;
+                var panel = document.getElementById(
+                  t.getAttribute("aria-controls"),
+                );
+                if (panel) panel.hidden = !on;
+              });
+              if (focus) tab.focus();
+            }
+
+            tabs.forEach(function (tab, i) {
+              tab.addEventListener("click", function () {
+                select(tab, false);
+              });
+              tab.addEventListener("keydown", function (e) {
+                var next;
+                if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
+                else if (e.key === "ArrowLeft")
+                  next = tabs[(i - 1 + tabs.length) % tabs.length];
+                else if (e.key === "Home") next = tabs[0];
+                else if (e.key === "End") next = tabs[tabs.length - 1];
+                if (!next) return;
+                e.preventDefault();
+                select(next, true);
+              });
+            });
+          },
+        );
       })();
 
       /* ---- Sign section (phones): switch between the sign-off and scoresheet screens ---- */
