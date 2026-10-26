@@ -2,7 +2,8 @@
 
 ## Now
 - Schedule. (Master Schedule) and Call. (Court Board) sections added to index.html, each with
-  an "At the table" / "Venue screen" tab pair + 4 new assets/*.webp. NOT committed or pushed yet.
+  an "At the table" / "Venue screen" tab pair + 4 new assets/*.webp. Pushed to main (b7d083c),
+  Pages is building; check the live site once it is up.
 - GA4 behind a consent banner is pushed to main (a2029ac), Pages is building.
   Files: index.html (banner, loader, events), privacy.html (new), sitemap.xml.
 
@@ -15,7 +16,7 @@
 
 ## Done (latest first, max 10)
 - 2026-10-26 Consent banner restyled: page font for the title (no Playball), no green left border,
-  ball logo removed (assets/speedup-ball.png itself left in place); NOT committed yet
+  ball logo removed (assets/speedup-ball.png itself left in place); in b7d083c
 - 2026-10-25 Added Schedule. + Call. sections after Play (ids #schedule, #courts); shots from a
   scratch SQLite Rizal Cup, staged mid-afternoon; tab script now per-tablist; checked 375/768/1440
 - 2026-10-23 GA data retention set to 14 months (event and user data), reset-on-activity on
