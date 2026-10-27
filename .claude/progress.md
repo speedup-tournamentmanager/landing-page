@@ -21,7 +21,6 @@
   line; mission underline; FAQ slide; nav underline; tab fade; reduced motion honored
 - 2026-10-26 Consent banner restyled (page font title, no green border, ball logo removed); b7d083c
 - 2026-10-25 Schedule. + Call. sections (#schedule, #courts) with two tabs each; b7d083c
-- 2026-10-23 GA4 (G-JPREMJE6Y8) behind consent banner + privacy.html + sitemap entry; a2029ac
 
 ## Decisions
 - Design goal: simple, clear, direct to the audience; the Figma frame was only a reference, not a
@@ -34,6 +33,7 @@
   signals/ad toggles off; consent code inline in index.html; retention 14 months (2026-10-23)
 
 ## Open questions
+- Commit .claude/CLAUDE.md + settings.json (public repo)? Untrack the tracked .DS_Store files?
 - Legal name / address for privacy.html?
 - hCaptcha and Web3Forms load without consent (disclosed in the policy) — acceptable?
 - Old empty GA property "dasd" couldn't be trashed (internal error); retry later
