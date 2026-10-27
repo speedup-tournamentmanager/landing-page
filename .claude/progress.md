@@ -1,24 +1,24 @@
 # Progress — Speedup landing page
 
 ## Now
-- Look + motion pass on index.html plus the demo-form photo, NOT committed or pushed. assets/bg-1.jpg
-  is untracked: commit it with index.html or the form loses its photo. Checked by measurement and a
-  stand-in image only: eyeball hero tilt, panel grow, screenshot draw-in, FAQ slide, demo form.
+- Messenger button committed locally (c2912f1), NOT pushed. Look + motion pass (d1adf7f) is live;
+  still eyeball hero tilt, panel grow, screenshot draw-in, FAQ slide and demo form on the live site.
 
 ## Next
-- [ ] Scroll the whole page in a real browser; drop the panel grow if it overlaps the screenshot
-      draw-in too much; then commit + push (switch to the speedup-tournamentmanager gh account)
+- [ ] Push c2912f1: GH_TOKEN="$(gh auth token --user speedup-tournamentmanager)" git push origin main
+      then click the live Messenger button: m.me/speeeeeduppb must open a chat with the page
+- [ ] Scroll the live page; drop the panel grow if it overlaps the screenshot draw-in too much
 - [ ] Test the live site: fresh private window, no googletagmanager request before Accept,
       then Analytics Realtime and Admin > DebugView (generate_lead)
 - [ ] GA: mark generate_lead and contact_click as key events; review privacy.html wording
 
 ## Done (latest first, max 10)
-- 2026-10-27 Look pass, uncommitted: hero centered, "Read the FAQ →" text link; no window dots on
-  frames; two alternating panel tints (mint/warm); plain-text pills; #why emoji cards → ruled rows;
-  demo form's left panel uses assets/bg-1.jpg under a green wash (illustration hidden, icons green)
-- 2026-10-27 Motion, uncommitted: floating hero + title wipe removed; scroll-linked panel grow,
-  hero tilt, screenshot draw-in, 3px progress line; mission underline; FAQ slide; nav underline;
-  tab fade; reduced motion honored
+- 2026-10-27 Messenger button (c2912f1, not pushed): top of the floating stack, m.me/speeeeeduppb
+  (from facebook.com/speeeeeduppb); tracked as contact_click method messenger; privacy.html updated
+- 2026-10-27 Look pass (d1adf7f): hero centered, "Read the FAQ →" link; no window dots; mint/warm
+  alternating panels; plain-text pills; #why cards → ruled rows; demo form photo (assets/bg-1.jpg)
+- 2026-10-27 Motion (d1adf7f): scroll-linked panel grow, hero tilt, screenshot draw-in, progress
+  line; mission underline; FAQ slide; nav underline; tab fade; reduced motion honored
 - 2026-10-26 Consent banner restyled (page font title, no green border, ball logo removed); b7d083c
 - 2026-10-25 Schedule. + Call. sections (#schedule, #courts) with two tabs each; b7d083c
 - 2026-10-23 GA4 (G-JPREMJE6Y8) behind consent banner + privacy.html + sitemap entry; a2029ac
