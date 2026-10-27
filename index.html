@@ -82,8 +82,6 @@
         --accent-ink: #1e5228;
         --lift-1: #eef4ec;
         --lift-2: #f3eee2;
-        --lift-3: #efe9f1;
-        --lift-4: #fbe9e7;
         --radius: 16px;
         --maxw: 1200px;
         /* Exact body font stack the Speedup app renders in (Bootstrap 5 default). */
@@ -172,9 +170,17 @@
       }
       .nav-links a {
         text-decoration: none;
+        padding-bottom: 4px;
+        margin-bottom: -4px;
+        background: linear-gradient(var(--accent), var(--accent)) left bottom /
+          0% 1.5px no-repeat;
+        transition:
+          color 0.15s ease,
+          background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .nav-links a:hover {
         color: var(--ink);
+        background-size: 100% 1.5px;
       }
       @media (max-width: 720px) {
         .nav-links {
@@ -191,12 +197,12 @@
         padding-bottom: 40px;
       }
       .hero h1 {
-        font-size: clamp(2.4rem, 6vw, 4rem);
-        line-height: 1.05;
+        font-size: clamp(2.6rem, 7vw, 5rem);
+        line-height: 1.02;
         letter-spacing: -0.035em;
         font-weight: 800;
-        max-width: 15ch;
-        margin: 0 auto 22px;
+        max-width: 18ch;
+        margin: 0 auto 24px;
       }
       .hero p {
         color: var(--muted);
@@ -206,8 +212,9 @@
       }
       .cta-row {
         display: flex;
-        gap: 12px;
+        gap: 14px 28px;
         justify-content: center;
+        align-items: center;
         flex-wrap: wrap;
       }
       .btn {
@@ -243,11 +250,41 @@
         transform: translateY(-2px);
         border-color: var(--accent);
       }
+      /* quiet secondary action: underlined text + the same arrow the lists use */
+      .link-arrow {
+        display: inline-flex;
+        align-items: center;
+        align-self: center;
+        gap: 6px;
+        padding-bottom: 3px;
+        border-bottom: 1.5px solid var(--muted);
+        font-weight: 650;
+        font-size: 0.96rem;
+        text-decoration: none;
+        transition:
+          color 0.14s ease,
+          border-color 0.14s ease;
+      }
+      .link-arrow::after {
+        content: "";
+        width: 18px;
+        height: 18px;
+        background: url("assets/arrow_right_alt_24dp_187339_FILL0_wght400_GRAD0_opsz24.svg")
+          center / contain no-repeat;
+        transition: transform 0.2s ease;
+      }
+      .link-arrow:hover {
+        color: var(--accent-ink);
+        border-color: var(--accent);
+      }
+      .link-arrow:hover::after {
+        transform: translateX(3px);
+      }
 
       /* ---------------- Browser frame ---------------- */
       .frame {
         border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border-radius: 10px;
         background: var(--surface);
         overflow: hidden;
         box-shadow: 0 26px 60px -32px rgba(20, 40, 20, 0.28);
@@ -260,15 +297,11 @@
         border-bottom: 1px solid var(--line);
         background: #f7f7f2;
       }
+      /* no fake window buttons: the bar is just a caption for the screenshot */
       .frame .bar i {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #d7d7cd;
-        display: block;
+        display: none;
       }
       .frame .bar span {
-        margin-left: 10px;
         font-size: 0.76rem;
         color: #9aa09a;
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -361,31 +394,22 @@
         margin-bottom: 6px;
       }
       .feat .panel {
-        border-radius: 24px;
+        border-radius: 12px;
         padding: clamp(24px, 4vw, 44px);
         display: grid;
         grid-template-columns: 0.85fr 1.5fr;
         gap: clamp(24px, 4vw, 48px);
         align-items: center;
       }
-      .feat:nth-of-type(odd) .panel {
-        background: var(--lift-1);
-      }
-      .feat:nth-of-type(even) .panel {
-        background: var(--lift-3);
-      }
-      .feat.warm .panel {
-        background: var(--lift-2);
-      }
-      .feat.rose .panel {
-        background: var(--lift-4);
-      }
-      /* explicit tints, so the colors keep alternating however many sections sit between */
+      /* two quiet tints that alternate (green-tinted, then paper) instead of a
+         pastel rainbow; each section names its tint, so the order never depends
+         on how many other sections sit between them */
+      .feat .panel,
       .feat.mint .panel {
         background: var(--lift-1);
       }
-      .feat.lilac .panel {
-        background: var(--lift-3);
+      .feat.warm .panel {
+        background: var(--lift-2);
       }
       .feat .panel.flip {
         grid-template-columns: 1.5fr 0.85fr;
@@ -515,41 +539,81 @@
       .benefits {
         padding-top: 90px;
         padding-bottom: 30px;
-        text-align: center;
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr);
+        gap: clamp(28px, 5vw, 72px);
+        align-items: start;
       }
       .benefits h2 {
-        font-size: clamp(1.7rem, 4vw, 2.6rem);
-        letter-spacing: -0.03em;
-        margin-bottom: 44px;
+        font-size: clamp(2rem, 4.2vw, 3.4rem);
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+        font-weight: 800;
       }
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-        text-align: left;
-      }
+      /* Ruled rows, like a scoresheet: a hairline above each row that draws in
+         once on scroll, plus a closing one under the last row. */
       .card {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 22px;
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: 6px 28px;
+        padding: 22px 0;
       }
-      .card .ico {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
+      .card::before,
+      .card:last-child::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--line);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .card::before {
+        top: 0;
+      }
+      .card:last-child::after {
+        bottom: 0;
+        transition-delay: 0.42s;
+      }
+      .card:nth-child(2)::before {
+        transition-delay: 0.06s;
+      }
+      .card:nth-child(3)::before {
+        transition-delay: 0.12s;
+      }
+      .card:nth-child(4)::before {
+        transition-delay: 0.18s;
+      }
+      .card:nth-child(5)::before {
+        transition-delay: 0.24s;
+      }
+      .card:nth-child(6)::before {
+        transition-delay: 0.3s;
+      }
+      .benefits.in .card::before,
+      .benefits.in .card:last-child::after {
+        transform: none;
       }
       .card h3 {
-        font-size: 0.98rem;
-        margin-bottom: 5px;
-        letter-spacing: -0.01em;
+        font-size: 1.05rem;
+        line-height: 1.3;
+        letter-spacing: -0.015em;
       }
       .card p {
-        font-size: 0.88rem;
+        font-size: 0.94rem;
         color: var(--muted);
         margin: 0;
       }
-      @media (max-width: 820px) {
-        .cards {
+      @media (max-width: 1000px) {
+        .card {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .benefits {
           grid-template-columns: 1fr;
         }
       }
@@ -566,7 +630,7 @@
         align-items: center;
         background: var(--lift-2);
         border: 1px solid var(--line);
-        border-radius: 24px;
+        border-radius: 12px;
         padding: clamp(28px, 4vw, 48px);
       }
       .wheel-wrap {
@@ -628,10 +692,6 @@
         letter-spacing: 0.14em;
         font-weight: 700;
         color: var(--accent-ink);
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 5px 12px;
         margin-bottom: 14px;
       }
       .companion-copy h2 {
@@ -795,27 +855,26 @@
       }
       .phone-tags {
         display: flex;
-        gap: 10px 14px;
+        gap: 10px 28px;
         flex-wrap: wrap;
         justify-content: center;
         margin-bottom: 52px;
       }
+      /* plain text with a small ball-dot marker, not icon pills */
       .phone-tag {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 8px 16px;
-        font-size: 0.9rem;
+        gap: 9px;
+        font-size: 0.95rem;
         font-weight: 600;
         color: var(--ink);
       }
-      .phone-tag svg {
-        width: 16px;
-        height: 16px;
-        fill: var(--accent);
+      .phone-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
         flex-shrink: 0;
       }
       /* ---------------- Smartphone frame (used by every phone screenshot) ---------------- */
@@ -1442,11 +1501,10 @@
 
         /* Phone showcase: tags that fit two to a row */
         .phone-tags {
-          gap: 8px;
+          gap: 8px 22px;
         }
         .phone-tag {
-          padding: 7px 13px;
-          font-size: 0.82rem;
+          font-size: 0.88rem;
         }
 
         /* Sign: one phone at a time, with a switcher */
@@ -1499,7 +1557,7 @@
         .feat .panel,
         .feat .panel.flip {
           padding: 22px 18px;
-          border-radius: 18px;
+          border-radius: 10px;
           gap: 20px;
         }
         .feat h2 {
@@ -1513,15 +1571,10 @@
         .benefits {
           padding-top: 56px;
           padding-bottom: 16px;
-        }
-        .benefits h2 {
-          margin-bottom: 26px;
-        }
-        .cards {
-          gap: 12px;
+          gap: 18px;
         }
         .card {
-          padding: 18px;
+          padding: 18px 0;
         }
 
         /* Companion */
@@ -1640,12 +1693,18 @@
       .modal-aside {
         position: relative;
         padding: 34px 32px;
-        background: radial-gradient(
-          120% 80% at 0% 0%,
-          var(--lift-1) 0%,
-          #e4efe0 55%,
-          #dcebd6 100%
-        );
+        color: #fff;
+        /* court photo under a dark green wash (heavy behind the text, lighter at
+           the bottom) so the white copy stays readable */
+        background:
+          linear-gradient(
+            180deg,
+            rgba(16, 38, 22, 0.82) 0%,
+            rgba(16, 38, 22, 0.7) 55%,
+            rgba(16, 38, 22, 0.38) 100%
+          ),
+          url("assets/bg-1.jpg") 48% 72% / cover no-repeat;
+        background-color: var(--accent-ink); /* shows while the photo loads */
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -1671,7 +1730,7 @@
         margin-bottom: 8px;
       }
       .modal-aside .modal-sub {
-        color: var(--muted);
+        color: rgba(255, 255, 255, 0.86);
         font-size: 0.9rem;
         margin-bottom: 22px;
         max-width: 30ch;
@@ -1707,20 +1766,15 @@
         font-size: 0.9rem;
         letter-spacing: -0.01em;
       }
-      .modal-perks span {
+      .modal-perks div > span {
         display: block;
         font-size: 0.8rem;
-        color: var(--muted);
+        color: rgba(255, 255, 255, 0.8);
         line-height: 1.4;
       }
+      /* the green-hills illustration gave way to the photo; markup kept, hidden */
       .modal-illo {
-        margin: 28px -32px -34px;
-        pointer-events: none;
-      }
-      .modal-illo svg {
-        width: 100%;
-        height: auto;
-        display: block;
+        display: none;
       }
 
       /* --- right / form panel --- */
@@ -1902,6 +1956,11 @@
         }
         .modal-aside {
           padding: 22px 24px 20px;
+          /* the copy fills the whole banner here, so the wash stays even */
+          background:
+            linear-gradient(rgba(16, 38, 22, 0.78), rgba(16, 38, 22, 0.7)),
+            url("assets/bg-1.jpg") 48% 72% / cover no-repeat;
+          background-color: var(--accent-ink);
         }
         .modal-aside-icon {
           width: 42px;
@@ -1931,37 +1990,167 @@
       }
 
       /* ---------------- Simple animation ---------------- */
+      /* Short, small, once. Plain blocks ease up a few px. The big feature
+         sections don't fade at all: their panels are scroll-linked (see below)
+         and the section words ("Set up.", "Play.") just sit there. */
       .reveal {
         opacity: 0;
-        transform: translateY(18px);
+        transform: translateY(12px);
         transition:
-          opacity 0.6s ease,
-          transform 0.6s ease;
+          opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .reveal.in {
         opacity: 1;
         transform: none;
       }
-      @keyframes floaty {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
+      .hero .reveal:nth-child(2) {
+        transition-delay: 0.08s;
+      }
+      .hero .reveal:nth-child(3) {
+        transition-delay: 0.16s;
+      }
+
+      .feat.reveal,
+      .feat.reveal.in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      /* Scroll-linked, no timers: each colored panel grows from slightly inset to
+         full size as it scrolls into view, and shrinks back if you scroll up.
+         Browsers without scroll-driven animations just show it at full size. */
+      @keyframes panel-grow {
+        from {
+          transform: scale(0.95);
         }
       }
-      .hero-shot .frame {
-        animation: floaty 7s ease-in-out infinite;
+      /* The hero screenshot stands up the same way: it starts laid back and a
+         little small, and settles flat as you scroll down to it. */
+      @keyframes shot-tilt {
+        from {
+          transform: perspective(1400px) rotateX(12deg) scale(0.93);
+        }
       }
+      @supports (animation-timeline: view()) {
+        .feat .panel {
+          animation: panel-grow linear both;
+          animation-timeline: view();
+          animation-range: entry 0% entry 50%;
+        }
+        .hero-shot .frame {
+          transform-origin: 50% 100%;
+          animation: shot-tilt linear both;
+          animation-timeline: view();
+          animation-range: cover 0% cover 38%;
+        }
+      }
+      /* the closing line of the mission sentence underlines itself once */
+      .mission em {
+        background: linear-gradient(var(--accent), var(--accent)) left bottom /
+          0% 2px no-repeat;
+        transition: background-size 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+      }
+      .mission.in em {
+        background-size: 100% 2px;
+      }
+
+      /* Feature screenshots draw in top to bottom as they scroll into view, like
+         a screen loading. Scroll-linked, so scrolling back up un-draws them. */
+      @keyframes shot-reveal {
+        from {
+          clip-path: inset(0 0 100% 0);
+        }
+        to {
+          clip-path: inset(0);
+        }
+      }
+      /* A thin accent line along the top edge shows how far down the page you are. */
+      @keyframes scroll-progress {
+        to {
+          transform: scaleX(1);
+        }
+      }
+      @supports (animation-timeline: view()) {
+        /* the frame clips its contents (overflow: hidden), which would make it
+           the scroll container the image measures against, so the image follows
+           the frame's own view timeline instead */
+        .feat .frame {
+          view-timeline: --shot;
+        }
+        .feat .shot img {
+          animation: shot-reveal linear both;
+          animation-timeline: --shot;
+          animation-range: entry 10% entry 90%;
+        }
+        body::before {
+          content: "";
+          position: fixed;
+          inset: 0 0 auto 0;
+          height: 3px;
+          background: var(--accent);
+          transform: scaleX(0);
+          transform-origin: left;
+          animation: scroll-progress linear both;
+          animation-timeline: scroll(root);
+          z-index: 45; /* above the page, below the floating buttons (50) */
+        }
+      }
+
+      /* FAQ answers slide open and shut instead of snapping. */
+      @supports selector(details::details-content) {
+        details {
+          interpolate-size: allow-keywords;
+        }
+        details::details-content {
+          height: 0;
+          overflow: clip;
+          transition:
+            height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+            content-visibility 0.35s allow-discrete;
+        }
+        details[open]::details-content {
+          height: auto;
+        }
+      }
+
+      /* tab switch (At the table / Venue screen, tie-break views): quick fade-in */
+      @keyframes panel-in {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+      }
+      .tie-panel:not([hidden]) {
+        animation: panel-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .reveal {
           opacity: 1;
           transform: none;
           transition: none;
         }
-        .hero-shot .frame {
+        .feat .panel,
+        .hero-shot .frame,
+        .feat .shot img,
+        body::before {
           animation: none;
+        }
+        details::details-content {
+          transition: none;
+        }
+        .mission em {
+          background-size: 100% 2px;
+          transition: none;
+        }
+        .tie-panel:not([hidden]) {
+          animation: none;
+        }
+        .card::before,
+        .card:last-child::after {
+          transform: none;
+          transition: none;
         }
         .wheel {
           animation: none;
@@ -2002,7 +2191,7 @@
       </p>
       <div class="cta-row reveal">
         <a class="btn btn-primary" href="#how">See how it works</a>
-        <a class="btn btn-ghost" href="#faq">Read the FAQ</a>
+        <a class="link-arrow" href="#faq">Read the FAQ</a>
       </div>
     </header>
 
@@ -2138,7 +2327,7 @@
     </section>
 
     <!-- FEATURE: SCHEDULE (Master Schedule + its display mode) -->
-    <section id="schedule" class="feat rose reveal">
+    <section id="schedule" class="feat mint reveal">
       <div class="wrap">
         <div class="kicker">Schedule.</div>
         <div class="panel">
@@ -2257,7 +2446,7 @@
     </section>
 
     <!-- FEATURE: CALL (Court Board + its display mode) -->
-    <section id="courts" class="feat mint reveal">
+    <section id="courts" class="feat warm reveal">
       <div class="wrap">
         <div class="kicker">Call.</div>
         <div class="panel flip">
@@ -2378,7 +2567,7 @@
     </section>
 
     <!-- FEATURE: SIGN (e-signature on the winning team's result) -->
-    <section id="sign" class="feat lilac reveal">
+    <section id="sign" class="feat mint reveal">
       <div class="wrap">
         <div class="kicker">Sign.</div>
         <div class="panel">
@@ -2473,7 +2662,7 @@
     </section>
 
     <!-- FEATURE: TRACK -->
-    <section class="feat mint reveal">
+    <section class="feat warm reveal">
       <div class="wrap">
         <div class="kicker">Track.</div>
         <div class="panel flip">
@@ -2515,7 +2704,7 @@
     </section>
 
     <!-- FEATURE: SETTLE (tie-breaks, shown on the public standings) -->
-    <section id="ties" class="feat lilac reveal">
+    <section id="ties" class="feat mint reveal">
       <div class="wrap">
         <div class="kicker">Settle.</div>
         <div class="panel">
@@ -2642,7 +2831,7 @@
     </section>
 
     <!-- FEATURE: SHARE -->
-    <section class="feat rose reveal">
+    <section class="feat warm reveal">
       <div class="wrap">
         <div class="kicker">Share.</div>
         <div class="panel flip">
@@ -2689,30 +2878,9 @@
         number update on their own.
       </p>
       <div class="phone-tags">
-        <span class="phone-tag">
-          <svg viewBox="0 -960 960 960" aria-hidden="true">
-            <path
-              d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-200v120h400v-120H280Zm200 100q17 0 28.5-11.5T520-180q0-17-11.5-28.5T480-220q-17 0-28.5 11.5T440-180q0 17 11.5 28.5T480-140ZM280-320h400v-440H280v440Zm0-520h400v-40H280v40Z"
-            />
-          </svg>
-          Any phone browser
-        </span>
-        <span class="phone-tag">
-          <svg viewBox="0 -960 960 960" aria-hidden="true">
-            <path
-              d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-56-216 226-226-58-58-168 168-84-84-58 58 142 142Z"
-            />
-          </svg>
-          No install, no login
-        </span>
-        <span class="phone-tag">
-          <svg viewBox="0 -960 960 960" aria-hidden="true">
-            <path
-              d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120ZM254-346l-84-86q59-59 138.5-93.5T480-560q92 0 171.5 35T790-431l-84 85q-44-44-102-69t-124-25q-66 0-124 25t-102 69ZM84-516 0-602q92-94 215-146t265-52q142 0 265 52t215 146l-84 86q-77-77-178.5-120.5T480-680q-112 0-213.5 43.5T84-516Z"
-            />
-          </svg>
-          Online, from anywhere
-        </span>
+        <span class="phone-tag">Any phone browser</span>
+        <span class="phone-tag">No install, no login</span>
+        <span class="phone-tag">Online, from anywhere</span>
       </div>
       <div class="phone-device">
         <span class="phone-deco" aria-hidden="true">
@@ -2735,7 +2903,6 @@
       <h2>Built for the people running the courts</h2>
       <div class="cards">
         <div class="card">
-          <div class="ico">&#9201;</div>
           <h3>Less time at the laptop</h3>
           <p>
             Schedules, standings and brackets build themselves, so you can watch
@@ -2743,7 +2910,6 @@
           </p>
         </div>
         <div class="card">
-          <div class="ico">&#128241;</div>
           <h3>Referees on their phones</h3>
           <p>
             A tap-based scoring card that follows the real doubles serve rules,
@@ -2752,7 +2918,6 @@
           </p>
         </div>
         <div class="card">
-          <div class="ico">&#128101;</div>
           <h3>Players stay informed</h3>
           <p>
             Public pages, a QR check-in and open tie-break breakdowns mean fewer
@@ -2761,7 +2926,6 @@
           </p>
         </div>
         <div class="card">
-          <div class="ico">&#127942;</div>
           <h3>Everything in one place</h3>
           <p>
             Rosters, payments, schedules, scores, standings and the bracket all
@@ -2770,7 +2934,6 @@
           </p>
         </div>
         <div class="card">
-          <div class="ico">&#128200;</div>
           <h3>Scales with the draw</h3>
           <p>
             From a Round of 8 club night to a Round of 64 open, with several
@@ -2778,7 +2941,6 @@
           </p>
         </div>
         <div class="card">
-          <div class="ico">&#128179;</div>
           <h3>Payments tracked</h3>
           <p>
             Per-player paid / unpaid status so you always know who still owes at
