@@ -1145,7 +1145,7 @@
         }
       }
 
-      /* ---------------- Floating contact buttons (WhatsApp / Telegram) ---------------- */
+      /* ---------------- Floating contact buttons (Messenger / Telegram / WhatsApp) ---------------- */
       .fab-stack {
         position: fixed;
         right: 24px;
@@ -1276,6 +1276,25 @@
         box-shadow:
           0 16px 32px rgba(20, 110, 170, 0.42),
           0 0 0 4px rgba(77, 189, 245, 0.35);
+      }
+
+      .ms-float {
+        background: linear-gradient(145deg, #0a8bff 0%, #a334fa 62%, #ff6968 100%);
+        box-shadow:
+          0 10px 24px rgba(110, 50, 200, 0.34),
+          0 2px 6px rgba(0, 0, 0, 0.12);
+        animation-delay: 0.3s;
+      }
+      .ms-float:hover,
+      .ms-float:focus-visible {
+        box-shadow:
+          0 16px 32px rgba(110, 50, 200, 0.4),
+          0 3px 8px rgba(0, 0, 0, 0.16);
+      }
+      .ms-float:focus-visible {
+        box-shadow:
+          0 16px 32px rgba(110, 50, 200, 0.4),
+          0 0 0 4px rgba(163, 52, 250, 0.35);
       }
 
       @media (max-width: 640px) {
@@ -3160,6 +3179,22 @@
     <!-- FLOATING CONTACT BUTTONS -->
     <div class="fab-stack">
       <a
+        class="fab ms-float"
+        href="https://m.me/speeeeeduppb"
+        target="_blank"
+        rel="noopener"
+        aria-label="Message us on Facebook Messenger"
+      >
+        <span class="fab__icon">
+          <svg viewBox="0 0 512 512" aria-hidden="true">
+            <path
+              d="M256.55 8C116.52 8 8 110.34 8 248.57c0 72.3 29.71 134.78 78.07 177.94 8.35 7.51 6.63 11.86 8.05 58.23A19.92 19.92 0 0 0 122 502.31c52.91-23.3 53.59-25.14 62.56-22.7C337.85 521.8 504 423.7 504 248.57 504 110.34 396.59 8 256.55 8zm149.24 185.13l-73 115.57a37.37 37.37 0 0 1-53.91 9.93l-58.08-43.47a15 15 0 0 0-18 0l-78.37 59.44c-10.46 7.93-24.16-4.6-17.11-15.67l73-115.57a37.36 37.36 0 0 1 53.91-9.93l58.06 43.46a15 15 0 0 0 18 0l78.41-59.38c10.44-7.98 24.14 4.54 17.09 15.62z"
+            />
+          </svg>
+        </span>
+        <span class="fab__label">Messenger</span>
+      </a>
+      <a
         class="fab tg-float"
         href="https://t.me/+639061223189"
         target="_blank"
@@ -3953,9 +3988,11 @@
             ? "whatsapp"
             : /^https:\/\/t\.me\//.test(href)
               ? "telegram"
-              : /^mailto:/.test(href)
-                ? "email"
-                : null;
+              : /^https:\/\/m\.me\//.test(href)
+                ? "messenger"
+                : /^mailto:/.test(href)
+                  ? "email"
+                  : null;
           if (!method) return;
           window.speedupTrack("contact_click", {
             method: method,
